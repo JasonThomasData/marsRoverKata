@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../lib/civetweb/include/CivetServer.h"
+#include "../lib/civetweb_min/src/CivetServer.h"
 
 class AHandler : public CivetHandler
 {
