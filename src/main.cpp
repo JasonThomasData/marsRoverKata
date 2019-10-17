@@ -1,12 +1,12 @@
 #include <iostream>
+#include <unistd.h>
 
 #include "../lib/civetweb_min/src/CivetServer.h"
 
-class AHandler : public CivetHandler
+class RequestHandler : public CivetHandler
 {
-  private:
-	bool
-	handleAll(const char *method,
+    private:
+	bool handleAll(const char *method,
 	          CivetServer *server,
 	          struct mg_connection *conn)
 	{
@@ -25,14 +25,12 @@ class AHandler : public CivetHandler
 		return true;
 	}
 
-  public:
-	bool
-	handleGet(CivetServer *server, struct mg_connection *conn)
+    public:
+	bool handleGet(CivetServer *server, struct mg_connection *conn)
 	{
 		return handleAll("GET", server, conn);
 	}
-	bool
-	handlePost(CivetServer *server, struct mg_connection *conn)
+	bool handlePost(CivetServer *server, struct mg_connection *conn)
 	{
 		return handleAll("POST", server, conn);
 	}
@@ -48,8 +46,15 @@ int main(int argc, char** argv)
 
     CivetServer server(cpp_options);
 
+    RequestHandler requestHandler;
+    server.addHandler("/", requestHandler);
+
     //IO io = IO(server); //make this a namespace, not a class
     //Planet mars = Planet("Mars", 5);
     //Rover rover = Rover(); //inject the
-    std::cout<< "Works"<< std::endl;
+
+    while(true)
+    {
+        usleep(1);
+    }
 }
