@@ -40,25 +40,11 @@ class AHandler : public CivetHandler
 
 int main(int argc, char** argv)
 {
-
-	const char *options[] = {
-	    "document_root", ".", "listening_ports", "8080", 0};
-    
-    std::vector<std::string> cpp_options;
-    for (int i=0; i<(sizeof(options)/sizeof(options[0])-1); i++) {
-        cpp_options.push_back(options[i]);
-    }
-
-    //std::vector<std::string> cpp_options = { "document_root", ".", "listening_ports", "8080", 0 };
-
-    /*
     std::vector<std::string> cpp_options;
     cpp_options.push_back("document_root");
     cpp_options.push_back(".");
     cpp_options.push_back("listening_ports");
     cpp_options.push_back("8080");
-    cpp_options.push_back(0);
-    */
 
     CivetServer server(cpp_options);
 
