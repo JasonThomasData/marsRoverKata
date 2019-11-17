@@ -17,7 +17,7 @@ The implementation invisaged is:
 
 - Main()
     - cliInterfaceStrategy = CliInterface() # listens for CLI inputs, returns outputs to OS/human user
-    # htmlInterfaceStrategy = HtmlInterface() # potential future extension
+    - htmlInterfaceStrategy = HtmlInterface() # potential future extension
     - IO( cliInterfaceStrategy ) # handles all In and Out, tokenising inputs as lists of instructions from OS, formats results from Robot
     - Robot() # receives instructions, returns results
     - Planet() # is available for robot interaction
