@@ -4,6 +4,6 @@ struct PlanetConfig
 {
     int surfaceWidth;
     int surfaceHeight;
-    std::vector obstacles;
+    int obstacleNumber;
 };
 #endif

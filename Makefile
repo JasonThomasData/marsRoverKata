@@ -1,13 +1,23 @@
-all: civetweb civetserver rover
-C++FLAGS = -std=c++17 -Wall
-.PHONY: all C++FLAGS LDFLAGS
+all: IO tests main exe
+tests: IO_unit_tests unit_tests_main unit_test_runner
 
-civetweb: lib/civetweb_min/src/civetweb.c
-	clang -c lib/civetweb_min/src/civetweb.c -o build/civetweb.o
+C++FLAGS= -std=c++17 -Wall
+.PHONY: all C++FLAGS
 
-civetserver: lib/civetweb_min/src/CivetServer.cpp
-	clang++ -c $(CXXFLAGS) lib/civetweb_min/src/CivetServer.cpp -o build/civetserver.o
+IO: src/IO.cpp
+	clang++ -c src/IO.cpp -o build/IO.o
 
-rover: src/main.cpp 
-	clang++ $(CXXFLAGS) src/main.cpp build/civetweb.o build/civetserver.o -o bin/rover
+IO_unit_tests: tests/unit/IO.cpp
+	clang++ -c tests/unit/IO.cpp -o build/IOUnitTests.o
 
+unit_tests_main: tests/main.cpp
+	clang++ -c tests/main.cpp -o build/unitTestsMain.o
+
+unit_test_runner: build/IO.o build/IOUnitTests.o build/unitTestsMain.o
+	clang++ $(C++FLAGS) build/IO.o build/IOUnitTests.o build/unitTestsMain.o -o bin/unitTests
+
+main: src/main.cpp
+	clang++ -c src/main.cpp -o build/main.o
+
+exe: build/IO.o build/main.o
+	clang++ $(C++FLAGS) build/IO.o build/main.o -o bin/robot

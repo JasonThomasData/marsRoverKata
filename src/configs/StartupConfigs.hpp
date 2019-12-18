@@ -6,6 +6,6 @@
 struct StartupConfigs
 {
     PlanetConfig planet;
-    RoverConfig rover;
+    RobotConfig robot;
 };
 #endif
