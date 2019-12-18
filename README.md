@@ -5,6 +5,10 @@ On Mac:
 
 On all platforms (tested on Mac): `make`
 
+### Tests
+
+    make && ./bin/unitTests
+
 ### Challenge
 - https://github.com/MYOB-Technology/General_Developer/blob/master/katas/kata-mars-rover/kata-mars-rover.md
 
@@ -29,5 +33,3 @@ On all platforms (tested on Mac): `make`
   to have certain abilities - like, "tell me if there's an obstacle here".
 
 Diagram made with draw.io
-
-
