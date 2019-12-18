@@ -2,9 +2,15 @@
 
 int main(int argc, char **argv)
 {
-    struct configs = IO::getMarsConfigs(argv);
-    Planet mars = new Planet(marsConfigs);
-    MarsRover rover = new Rover(&mars);
+    for (int i=0; i<argc; i++)
+    {
+        std::cout << "Parameter " << i << " was " << argv[i] << std::endl;
+    }
+
+    //StartupConfigs configs = IO::geStartupConfigs(argv);
+    /*
+    Planet mars = new Planet(configs.planet);
+    MarsRover rover = new Rover(&mars, configs.rover);
 
     while (true)
     {
@@ -14,5 +20,6 @@ int main(int argc, char **argv)
     }
 
     return 0;
+    */
 }
 
