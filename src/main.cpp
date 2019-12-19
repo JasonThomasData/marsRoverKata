@@ -4,7 +4,8 @@
 
 int main(int argc, char *argv[])
 {
-    StartupConfigs configs = IO::getStartupConfigs(argv);
+    StartupConfigs configs;
+    configs = IO::getStartupConfigs(argv);
     std::cout<< configs.planet.surfaceWidth<< std::endl;
     std::cout<< configs.planet.surfaceHeight<< std::endl;
     std::cout<< configs.planet.obstacleNumber<< std::endl;

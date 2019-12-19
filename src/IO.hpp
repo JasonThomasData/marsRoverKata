@@ -2,8 +2,8 @@
 
 namespace IO
 {
-    void checkIsNumeric(std::string arg);
-    void checkIsPositive(int number);
+    void displayUsage();
+    void checkIsPositiveInteger(std::string arg);
     int getNumericArgument(std::string arg);
     StartupConfigs getStartupConfigs(char* argv[]);
 }
