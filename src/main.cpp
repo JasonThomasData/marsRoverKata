@@ -4,13 +4,21 @@
 
 int main(int argc, char *argv[])
 {
-    StartupConfigs configs;
-    configs = IO::getStartupConfigs(argv);
-    std::cout<< configs.planet.surfaceWidth<< std::endl;
-    std::cout<< configs.planet.surfaceHeight<< std::endl;
-    std::cout<< configs.planet.obstacleNumber<< std::endl;
-    std::cout<< configs.robot.x_coordinate << std::endl;
-    std::cout<< configs.robot.y_coordinate << std::endl;
+    try
+    {
+        StartupConfigs configs;
+        configs = IO::getStartupConfigs(argc, argv);
+        std::cout<< configs.planet.surfaceWidth<< std::endl;
+        std::cout<< configs.planet.surfaceHeight<< std::endl;
+        std::cout<< configs.planet.obstacleNumber<< std::endl;
+        std::cout<< configs.robot.x_coordinate << std::endl;
+        std::cout<< configs.robot.y_coordinate << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr<< e.what()<< std::endl;
+    }
+
 
     /*
     Planet mars = new Planet(configs.planet);

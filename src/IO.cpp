@@ -9,8 +9,10 @@ void IO::displayUsage()
 {
     const std::string usage = "correct usage: ./bin/rover <PLANET_WIDTH> <PLANET_HEIGHT> <NUMBER_OF_OBSTACLES> <ROBOT_X_COORDINATE> <ROBOT_Y_COORDINATE>";
     const std::string example = "eg: ./bin/rover 10 12 5 4 5";
+    std::cout<< std::endl;
     std::cout<< usage<< std::endl;
     std::cout<< example<< std::endl;
+    std::cout<< std::endl;
 }
 
 void IO::checkIsPositiveInteger(std::string arg)
@@ -19,6 +21,7 @@ void IO::checkIsPositiveInteger(std::string arg)
     {
         if (isdigit(arg[i]) == false) 
         {
+            displayUsage();
             throw std::invalid_argument("Valid arguments are positive integers");
         }
     }
@@ -31,26 +34,24 @@ int IO::getNumericArgument(std::string arg)
     return number;
 }
 
-StartupConfigs IO::getStartupConfigs(char* argv[])
+StartupConfigs IO::getStartupConfigs(int argc, char* argv[])
 {
-    try
+    const int requiredArgs = 6;
+    if (argc != requiredArgs)
     {
-        PlanetConfig planetConfig;
-        planetConfig.surfaceWidth = getNumericArgument(argv[1]);
-        planetConfig.surfaceHeight = getNumericArgument(argv[2]);
-        planetConfig.obstacleNumber = getNumericArgument(argv[3]);
-
-        RobotConfig robotConfig;
-        robotConfig.x_coordinate = getNumericArgument(argv[4]);
-        robotConfig.y_coordinate = getNumericArgument(argv[5]);
-
-        StartupConfigs startupConfigs = { planetConfig, robotConfig };
-        return startupConfigs;
-    }
-    catch(const std::invalid_argument& e)
-    {
-        std::cout<< "Encountered error -"<< e.what()<< std::endl;
         displayUsage();
-        exit(1);
+        throw std::invalid_argument("Incorrect number of args");
     }
+
+    PlanetConfig planetConfig;
+    planetConfig.surfaceWidth = getNumericArgument(argv[1]);
+    planetConfig.surfaceHeight = getNumericArgument(argv[2]);
+    planetConfig.obstacleNumber = getNumericArgument(argv[3]);
+
+    RobotConfig robotConfig;
+    robotConfig.x_coordinate = getNumericArgument(argv[4]);
+    robotConfig.y_coordinate = getNumericArgument(argv[5]);
+
+    StartupConfigs startupConfigs = { planetConfig, robotConfig };
+    return startupConfigs;
 }
