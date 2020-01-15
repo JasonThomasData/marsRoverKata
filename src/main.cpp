@@ -1,6 +1,8 @@
 #include <iostream>
 #include "configs/StartupConfigs.hpp"
 #include "IO.hpp"
+#include "simulation/planet.hpp"
+
 
 int main(int argc, char *argv[])
 {
@@ -8,21 +10,15 @@ int main(int argc, char *argv[])
     {
         StartupConfigs configs;
         configs = IO::getStartupConfigs(argc, argv);
-        std::cout<< configs.planet.surfaceWidth<< std::endl;
-        std::cout<< configs.planet.surfaceHeight<< std::endl;
-        std::cout<< configs.planet.obstacleNumber<< std::endl;
-        std::cout<< configs.robot.x_coordinate << std::endl;
-        std::cout<< configs.robot.y_coordinate << std::endl;
+        Planet mars = Planet(configs.planet);
+        //MarsRover rover = new Rover(&mars, configs.rover);
     }
     catch(const std::exception& e)
     {
         std::cerr<< e.what()<< std::endl;
     }
 
-
     /*
-    Planet mars = new Planet(configs.planet);
-    MarsRover rover = new Rover(&mars, configs.rover);
 
     while (true)
     {
