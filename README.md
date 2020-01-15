@@ -25,11 +25,3 @@ On all platforms (tested on Mac): `make`
 - Using C++
 - CI/CD
 
-#### Domain model
-![domain model](MarsRover_DomainModel.png)
-
-- I was tempted to model this as the planet as a POD, with no methods of its own, and for the rover
-  to know about the planet. It seems that using Tell Don't Ask means it makes sense for the planet
-  to have certain abilities - like, "tell me if there's an obstacle here".
-
-Diagram made with draw.io
