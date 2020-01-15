@@ -5,7 +5,7 @@
 #include <iostream>
 #include "io.hpp"
 
-void IO::displayUsage()
+void IO::displayInitialisationUsage()
 {
     const std::string usage = "correct usage: ./bin/rover <PLANET_WIDTH> <PLANET_HEIGHT> <NUMBER_OF_OBSTACLES> <ROBOT_X_COORDINATE> <ROBOT_Y_COORDINATE>";
     const std::string example = "eg: ./bin/rover 10 12 5 4 5";
@@ -21,7 +21,7 @@ void IO::checkIsPositiveInteger(std::string arg)
     {
         if (isdigit(arg[i]) == false) 
         {
-            displayUsage();
+            displayInitialisationUsage();
             throw std::invalid_argument("Valid arguments are positive integers");
         }
     }
@@ -39,7 +39,7 @@ StartupConfigs IO::getStartupConfigs(int argc, char* argv[])
     const int requiredArgs = 6;
     if (argc != requiredArgs)
     {
-        displayUsage();
+        displayInitialisationUsage();
         throw std::invalid_argument("Incorrect number of args");
     }
 

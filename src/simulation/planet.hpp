@@ -1,18 +1,22 @@
+#include <vector>
+#include "../configs/planet-config.hpp"
+#include "surface-square.hpp"
+#include "i_planet.hpp"
+
 #ifndef Planet_h 
 #define Planet_h
 
-#include <vector>
-#include "../configs/planet-config.hpp"
-#include "surface.hpp"
-
-class Planet
+class Planet: public IPlanet
 {
     public:
+        Planet();
         Planet(PlanetConfig planetConfig);
-        const std::vector< std::vector<Surface> > surface;
+        SurfaceSquare whatIsAtCoordinate(int fromTop, int fromLeft) override;
     private:
-        void CreateSurface(PlanetConfig planetConfig);
-        void CreateObstacles(PlanetConfig planetConfig);
+        std::vector< std::vector<SurfaceSquare> > surface;
+        void createSurface(PlanetConfig planetConfig);
+        void createObstacles(PlanetConfig planetConfig);
+        void checkConfigsValid(PlanetConfig planetConfig);
 };
 
 #endif

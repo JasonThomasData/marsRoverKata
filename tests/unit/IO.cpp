@@ -1,6 +1,6 @@
 #include <iostream>
 #include "../../lib/catch.hpp"
-#include "../../src/IO.hpp"
+#include "../../src/io.hpp"
 
 TEST_CASE("argv converted to int" )
 {
@@ -13,7 +13,14 @@ TEST_CASE("argv converted to int" )
 TEST_CASE("No args" )
 {
     int argc = 1;
-    char* argv[] = { "./bin/program"};
+    char* argv[] = { "./bin/program" };
+    REQUIRE_THROWS_AS(IO::getStartupConfigs(argc, argv), std::invalid_argument);
+}
+
+TEST_CASE("Not enough args" )
+{
+    int argc = 2;
+    char* argv[] = { "./bin/program", "12" };
     REQUIRE_THROWS_AS(IO::getStartupConfigs(argc, argv), std::invalid_argument);
 }
 
