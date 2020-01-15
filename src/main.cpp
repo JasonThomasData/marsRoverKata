@@ -1,6 +1,6 @@
 #include <iostream>
-#include "configs/StartupConfigs.hpp"
-#include "IO.hpp"
+#include "configs/startup-config.hpp"
+#include "io.hpp"
 #include "simulation/planet.hpp"
 
 

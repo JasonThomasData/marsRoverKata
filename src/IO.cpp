@@ -3,7 +3,7 @@
 #include <sstream>
 #include <string>
 #include <iostream>
-#include "IO.hpp"
+#include "io.hpp"
 
 void IO::displayUsage()
 {

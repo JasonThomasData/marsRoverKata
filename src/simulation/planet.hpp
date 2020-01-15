@@ -2,15 +2,15 @@
 #define Planet_h
 
 #include <vector>
-#include "../configs/PlanetConfig.hpp"
+#include "../configs/planet-config.hpp"
 #include "surface.hpp"
 
 class Planet
 {
     public:
         Planet(PlanetConfig planetConfig);
+        const std::vector< std::vector<Surface> > surface;
     private:
-        std::vector<std::vector<Surface> > surface;
         void CreateSurface(PlanetConfig planetConfig);
         void CreateObstacles(PlanetConfig planetConfig);
 };

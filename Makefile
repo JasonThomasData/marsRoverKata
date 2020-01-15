@@ -1,29 +1,29 @@
-all: IO Planet tests main exe
-tests: IO_unit_tests Planet_unit_tests unit_tests_main unit_test_runner
+all: io planet tests main exe
+tests: io_unit_tests planet_unit_tests unit_tests_main unit_test_runner
 
 C++FLAGS= -std=c++17 -Wall
 .PHONY: all C++FLAGS
 
-IO: src/IO.cpp
-	clang++ -c src/IO.cpp -o build/IO.o
+io: src/io.cpp
+	clang++ -c src/io.cpp -o build/io.o
 
-Planet: src/simulation/Planet.cpp
-	clang++ -c src/simulation/Planet.cpp -o build/Planet.o
+planet: src/simulation/planet.cpp
+	clang++ -c src/simulation/planet.cpp -o build/planet.o
 
-IO_unit_tests: tests/unit/IO.cpp
-	clang++ -c tests/unit/IO.cpp -o build/IOUnitTests.o
+io_unit_tests: tests/unit/io.cpp
+	clang++ -c tests/unit/io.cpp -o build/io-unit-tests.o
 
-Planet_unit_tests: tests/unit/Planet.cpp
-	clang++ -c tests/unit/Planet.cpp -o build/PlanetUnitTests.o
+planet_unit_tests: tests/unit/planet.cpp
+	clang++ -c tests/unit/planet.cpp -o build/planet-unit-tests.o
 
 unit_tests_main: tests/main.cpp
-	clang++ -c tests/main.cpp -o build/unitTestsMain.o
+	clang++ -c tests/main.cpp -o build/unit-tests-main.o
 
-unit_test_runner: build/IO.o build/IOUnitTests.o build/PlanetUnitTests.o build/unitTestsMain.o
-	clang++ $(C++FLAGS) build/IO.o build/IOUnitTests.o build/PlanetUnitTests.o build/unitTestsMain.o -o bin/unitTests
+unit_test_runner: build/io.o build/planet.o build/io-unit-tests.o build/planet-unit-tests.o build/unit-tests-main.o
+	clang++ $(C++FLAGS) build/io.o build/planet.o build/io-unit-tests.o build/planet-unit-tests.o build/unit-tests-main.o -o bin/unit-tests
 
 main: src/main.cpp
 	clang++ -c src/main.cpp -o build/main.o
 
-exe: build/IO.o build/Planet.o build/main.o
-	clang++ $(C++FLAGS) build/IO.o build/Planet.o build/main.o -o bin/robot
+exe: build/io.o build/planet.o build/main.o
+	clang++ $(C++FLAGS) build/IO.o build/planet.o build/main.o -o bin/robot

@@ -1,5 +1,5 @@
 #include "planet.hpp"
-#include "../configs/PlanetConfig.hpp"
+#include "../configs/planet-config.hpp"
 
 void Planet::CreateSurface(PlanetConfig planetConfig)
 {};

@@ -1,5 +1,5 @@
-#include "PlanetConfig.hpp"
-#include "RobotConfig.hpp"
+#include "planet-config.hpp"
+#include "robot-config.hpp"
 
 #ifndef StartupConfigs_hpp
 #define StartupConfigs_hpp
