@@ -5,7 +5,7 @@
 #include "../../src/simulation/surface-square.hpp"
 #include "../../src/simulation/coordinates.hpp"
 
-TEST_CASE("Constructs successfully")
+TEST_CASE("Planet constructs successfully")
 {
     int surfaceWidth = 14;
     int surfaceHeight = 3;
