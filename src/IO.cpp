@@ -21,7 +21,6 @@ void IO::checkIsPositiveInteger(std::string arg)
     {
         if (isdigit(arg[i]) == false) 
         {
-            displayInitialisationUsage();
             throw std::invalid_argument("Valid arguments are positive integers");
         }
     }
@@ -39,7 +38,6 @@ StartupConfigs IO::getStartupConfigs(int argc, char* argv[])
     const int requiredArgs = 6;
     if (argc != requiredArgs)
     {
-        displayInitialisationUsage();
         throw std::invalid_argument("Incorrect number of args");
     }
 

@@ -1,6 +1,7 @@
 #include <sstream>
 #include <stdexcept>
 #include "planet.hpp"
+#include "surface-square.hpp"
 #include "../configs/planet-config.hpp"
 
 void Planet::checkConfigsValid(PlanetConfig planetConfig)
@@ -29,26 +30,35 @@ void Planet::createSurface(PlanetConfig planetConfig)
 
 void Planet::createObstacles(PlanetConfig planetConfig)
 {
-    int obstaclesAdded = 0;
-    while(obstaclesAdded < planetConfig.obstacleNumber)
+    while(numberOfObstacles < planetConfig.obstacleNumber)
     {
         int fromTop = rand() % planetConfig.surfaceHeight;
         int fromLeft = rand() % planetConfig.surfaceWidth;
         if(surface[fromTop][fromLeft] != SurfaceSquare::obstacle)
         {
             surface[fromTop][fromLeft] = SurfaceSquare::obstacle;
-            obstaclesAdded++;
+            numberOfObstacles++;
         }
     }
 };
 
-SurfaceSquare Planet::whatIsAtCoordinate(int fromTop, int fromLeft)
+bool Planet::isObstacleAtCoordinate(int fromTop, int fromLeft)
 {
-    return surface[fromTop][fromLeft];
+    if(surface[fromTop][fromLeft] == SurfaceSquare::obstacle)
+    {
+        return true;
+    };
+    return false;
+}
+
+int Planet::countObstaclesOnSurface()
+{
+    return numberOfObstacles;
 }
 
 Planet::Planet(PlanetConfig planetConfig)
 {
+    numberOfObstacles = 0;
     checkConfigsValid(planetConfig);
     createSurface(planetConfig);
     createObstacles(planetConfig);

@@ -6,7 +6,8 @@
 class IPlanet
 {
     public:
-        virtual SurfaceSquare whatIsAtCoordinate(int fromTop, int fromLeft) =0;
+        virtual int countObstaclesOnSurface() =0;
+        virtual bool isObstacleAtCoordinate(int fromTop, int fromLeft) =0;
 };
 
 #endif

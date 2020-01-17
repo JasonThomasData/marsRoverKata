@@ -10,23 +10,11 @@ TEST_CASE("Constructs successfully")
     int surfaceHeight = 3;
     int obstacleNumber = 5;
 
-    int obstaclesFound = 0;
-
     PlanetConfig planetConfig = { surfaceWidth, surfaceHeight, obstacleNumber };
     Planet planet = Planet(planetConfig);
+    int countOfObstaclesOnSurface = planet.countObstaclesOnSurface();
 
-    for(int i = 0; i < surfaceHeight; i++)
-    {
-        for(int j = 0; j < surfaceWidth; j++)
-        {
-            if(planet.whatIsAtCoordinate(i, j) == SurfaceSquare::obstacle)
-            {
-                obstaclesFound ++;
-            }
-        }
-    }
-
-    REQUIRE(obstaclesFound == obstacleNumber);
+    REQUIRE(countOfObstaclesOnSurface == obstacleNumber);
 }
 
 TEST_CASE("Not enough space for obstacles")
