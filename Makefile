@@ -11,10 +11,10 @@ planet: src/simulation/planet.cpp
 	clang++ $(C++FLAGS) -c src/simulation/planet.cpp -o build/planet.o
 
 io_unit_tests: tests/unit/io.cpp
-	clang++ $(C++FLAGS) -c tests/unit/io.cpp -o build/io-unit-tests.o
+	clang++ $(C++FLAGS) -Wno-writable-strings -c tests/unit/io.cpp -o build/io-unit-tests.o
 
 planet_unit_tests: tests/unit/planet.cpp
-	clang++ $(C++FLAGS) -c tests/unit/planet.cpp -o build/planet-unit-tests.o
+	clang++ $(C++FLAGS) -Wno-writable-strings -c tests/unit/planet.cpp -o build/planet-unit-tests.o
 
 unit_tests_main: tests/main.cpp
 	clang++ $(C++FLAGS) -c tests/main.cpp -o build/unit-tests-main.o
