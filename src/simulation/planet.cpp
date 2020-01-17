@@ -36,7 +36,7 @@ void Planet::createObstacles(StartupConfigs startupConfig)
         obstacleCoordinates.fromTop = rand() % startupConfig.planet.surfaceHeight;
         obstacleCoordinates.fromLeft = rand() % startupConfig.planet.surfaceWidth;
         if(surface[obstacleCoordinates.fromTop][obstacleCoordinates.fromLeft] != SurfaceSquare::obstacle
-            && obstacleCoordinates.isDifferent(startupConfig.robot.coordinates))
+            && !obstacleCoordinates.isSame(startupConfig.robot.coordinates))
         {
             surface[obstacleCoordinates.fromTop][obstacleCoordinates.fromLeft] = SurfaceSquare::obstacle;
             numberOfObstacles++;
@@ -56,15 +56,6 @@ bool Planet::isObstacleAtCoordinate(Coordinates coordinates)
 int Planet::countObstaclesOnSurface()
 {
     return numberOfObstacles;
-}
-
-void Planet::pickRandomVacantCoordinates(Coordinates& coordinates)
-{
-    while(true)
-    {
-        int possible_coordinate_fromTop = rand() % surface.size();
-        int possible_coordinate_fromLeft = rand() % surface.at(0).size();
-    }
 }
 
 Planet::Planet(StartupConfigs startupConfig)

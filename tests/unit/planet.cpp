@@ -16,10 +16,8 @@ TEST_CASE("Constructs successfully")
     StartupConfigs startupConfigs;
     startupConfigs.planet = { surfaceWidth, surfaceHeight, obstacleNumber };
     startupConfigs.robot.coordinates = { robotFromTop, robotFromRight };
-    Planet planet = Planet(startupConfigs);
-    int countOfObstaclesOnSurface = planet.countObstaclesOnSurface();
 
-    REQUIRE(countOfObstaclesOnSurface == obstacleNumber);
+    REQUIRE_NOTHROW(Planet(startupConfigs));
 }
 
 TEST_CASE("Not enough space for obstacles")
@@ -34,7 +32,7 @@ TEST_CASE("Not enough space for obstacles")
     REQUIRE_THROWS_AS(Planet(startupConfigs), std::invalid_argument);
 }
 
-TEST_CASE("Checks obstacles are found")
+TEST_CASE("Checks obstacles are found and space left for robot")
 {
     int surfaceWidth = 2;
     int surfaceHeight = 2;

@@ -15,7 +15,6 @@ class Planet: public IPlanet
         Planet(StartupConfigs startupConfig);
         bool isObstacleAtCoordinate(Coordinates coordinates) override;
         int countObstaclesOnSurface() override;
-        void pickRandomVacantCoordinates(Coordinates& coordinates) override;
     private:
         int numberOfObstacles;
         std::vector< std::vector<SurfaceSquare> > surface;

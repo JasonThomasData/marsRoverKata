@@ -1,4 +1,4 @@
-all: io planet tests main simulation
+all: io planet robot tests main simulation
 tests: io_unit_tests planet_unit_tests unit_tests_main unit_test_runner
 
 C++FLAGS= -std=c++17 -Wall -Wc++11-extensions
@@ -9,6 +9,9 @@ io: src/io.cpp
 
 planet: src/simulation/planet.cpp
 	clang++ $(C++FLAGS) -c src/simulation/planet.cpp -o build/planet.o
+
+robot: src/simulation/robot.cpp
+	clang++ $(C++FLAGS) -c src/simulation/robot.cpp -o build/robot.o
 
 io_unit_tests: tests/unit/io.cpp
 	clang++ $(C++FLAGS) -Wno-writable-strings -c tests/unit/io.cpp -o build/io-unit-tests.o
@@ -26,4 +29,4 @@ main: src/main.cpp
 	clang++ $(C++FLAGS) -c src/main.cpp -o build/main.o
 
 simulation: build/io.o build/planet.o build/main.o
-	clang++ $(C++FLAGS) build/io.o build/planet.o build/main.o -o bin/simulation
+	clang++ $(C++FLAGS) build/io.o build/planet.o build/robot.o build/main.o -o bin/simulation

@@ -2,18 +2,19 @@
 #include "configs/startup-config.hpp"
 #include "io.hpp"
 #include "simulation/planet.hpp"
+#include "simulation/robot.hpp"
 
 
 int main(int argc, char *argv[])
 {
     StartupConfigs configs;
-    Planet mars;
-    //MarsRover rover;
+    std::unique_ptr<IPlanet> mars;
+    Robot robot;
     try
     {
         configs = IO::getStartupConfigs(argc, argv);
-        mars = Planet(configs);
-        //rover = Robot(&mars, configs.robot);
+        mars = std::make_unique<Planet>(configs);
+        robot = Robot(std::move(mars), configs.robot);
     }
     catch(const std::exception& e)
     {

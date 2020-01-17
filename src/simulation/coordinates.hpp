@@ -5,10 +5,11 @@ struct Coordinates
 {
     int fromTop;
     int fromLeft;
-    bool isDifferent(Coordinates otherCoordinates)
+
+    bool isSame(Coordinates otherCoordinates)
     {
-        if (fromTop != otherCoordinates.fromTop
-            || fromLeft != otherCoordinates.fromLeft)
+        if (fromTop == otherCoordinates.fromTop
+            && fromLeft == otherCoordinates.fromLeft)
         {
             return true;
         }
