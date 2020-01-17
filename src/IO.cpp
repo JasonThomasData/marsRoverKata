@@ -7,8 +7,8 @@
 
 void IO::displayInitialisationUsage()
 {
-    const std::string usage = "correct usage: ./bin/rover <PLANET_WIDTH> <PLANET_HEIGHT> <NUMBER_OF_OBSTACLES> <ROBOT_X_COORDINATE> <ROBOT_Y_COORDINATE>";
-    const std::string example = "eg: ./bin/rover 10 12 5 4 5";
+    const std::string usage = "correct usage: ./bin/simulation <PLANET_WIDTH> <PLANET_HEIGHT> <NUMBER_OF_OBSTACLES> <ROBOT_X_COORDINATE> <ROBOT_Y_COORDINATE>";
+    const std::string example = "eg: ./bin/simulation 10 12 5 4 5";
     std::cout<< std::endl;
     std::cout<< usage<< std::endl;
     std::cout<< example<< std::endl;

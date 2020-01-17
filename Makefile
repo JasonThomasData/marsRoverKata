@@ -1,4 +1,4 @@
-all: io planet tests main exe
+all: io planet tests main simulation
 tests: io_unit_tests planet_unit_tests unit_tests_main unit_test_runner
 
 C++FLAGS= -std=c++17 -Wall -Wc++11-extensions
@@ -25,5 +25,5 @@ unit_test_runner: build/io.o build/planet.o build/io-unit-tests.o build/planet-u
 main: src/main.cpp
 	clang++ $(C++FLAGS) -c src/main.cpp -o build/main.o
 
-exe: build/io.o build/planet.o build/main.o
-	clang++ $(C++FLAGS) build/io.o build/planet.o build/main.o -o bin/robot
+simulation: build/io.o build/planet.o build/main.o
+	clang++ $(C++FLAGS) build/io.o build/planet.o build/main.o -o bin/simulation
