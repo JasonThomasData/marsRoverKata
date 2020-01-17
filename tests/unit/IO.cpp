@@ -32,8 +32,8 @@ TEST_CASE("argv received, and an appropriate StartupConfigs struct is returned" 
     REQUIRE(configs.planet.surfaceWidth == 12);
     REQUIRE(configs.planet.surfaceHeight == 10);
     REQUIRE(configs.planet.obstacleNumber == 5);
-    REQUIRE(configs.robot.x_coordinate == 5);
-    REQUIRE(configs.robot.y_coordinate == 4);
+    REQUIRE(configs.robot.coordinates.fromTop == 5);
+    REQUIRE(configs.robot.coordinates.fromLeft == 4);
 }
 
 TEST_CASE("argv has a wrong type, error thrown" )

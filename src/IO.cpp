@@ -47,8 +47,7 @@ StartupConfigs IO::getStartupConfigs(int argc, char* argv[])
     planetConfig.obstacleNumber = getNumericArgument(argv[3]);
 
     RobotConfig robotConfig;
-    robotConfig.x_coordinate = getNumericArgument(argv[4]);
-    robotConfig.y_coordinate = getNumericArgument(argv[5]);
+    robotConfig.coordinates = { getNumericArgument(argv[4]), getNumericArgument(argv[5]) };
 
     StartupConfigs startupConfigs = { planetConfig, robotConfig };
     return startupConfigs;

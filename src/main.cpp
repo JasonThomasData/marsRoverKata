@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     try
     {
         configs = IO::getStartupConfigs(argc, argv);
-        mars = Planet(configs.planet);
+        mars = Planet(configs);
         //rover = Robot(&mars, configs.robot);
     }
     catch(const std::exception& e)

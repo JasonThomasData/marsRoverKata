@@ -10,7 +10,7 @@ void Planet::checkConfigsValid(PlanetConfig planetConfig)
     if(planetConfig.obstacleNumber >= surfaceArea)
     {
         std::ostringstream errorMessage;
-        errorMessage<< "There is no room to place the robot on this surface area of"<< surfaceArea<< " and "<< planetConfig.obstacleNumber<< " obstacles."; 
+        errorMessage<< "There is no room to place the robot on this planet (surface area of "<< surfaceArea<< " and "<< planetConfig.obstacleNumber<< " obstacles)."; 
         throw std::invalid_argument(errorMessage.str());
     }
 }
@@ -28,23 +28,25 @@ void Planet::createSurface(PlanetConfig planetConfig)
     }
 };
 
-void Planet::createObstacles(PlanetConfig planetConfig)
+void Planet::createObstacles(StartupConfigs startupConfig)
 {
-    while(numberOfObstacles < planetConfig.obstacleNumber)
+    while(numberOfObstacles < startupConfig.planet.obstacleNumber)
     {
-        int fromTop = rand() % planetConfig.surfaceHeight;
-        int fromLeft = rand() % planetConfig.surfaceWidth;
-        if(surface[fromTop][fromLeft] != SurfaceSquare::obstacle)
+        Coordinates obstacleCoordinates;
+        obstacleCoordinates.fromTop = rand() % startupConfig.planet.surfaceHeight;
+        obstacleCoordinates.fromLeft = rand() % startupConfig.planet.surfaceWidth;
+        if(surface[obstacleCoordinates.fromTop][obstacleCoordinates.fromLeft] != SurfaceSquare::obstacle
+            && obstacleCoordinates.isDifferent(startupConfig.robot.coordinates))
         {
-            surface[fromTop][fromLeft] = SurfaceSquare::obstacle;
+            surface[obstacleCoordinates.fromTop][obstacleCoordinates.fromLeft] = SurfaceSquare::obstacle;
             numberOfObstacles++;
         }
     }
 };
 
-bool Planet::isObstacleAtCoordinate(int fromTop, int fromLeft)
+bool Planet::isObstacleAtCoordinate(Coordinates coordinates)
 {
-    if(surface[fromTop][fromLeft] == SurfaceSquare::obstacle)
+    if(surface[coordinates.fromTop][coordinates.fromLeft] == SurfaceSquare::obstacle)
     {
         return true;
     };
@@ -56,12 +58,21 @@ int Planet::countObstaclesOnSurface()
     return numberOfObstacles;
 }
 
-Planet::Planet(PlanetConfig planetConfig)
+void Planet::pickRandomVacantCoordinates(Coordinates& coordinates)
+{
+    while(true)
+    {
+        int possible_coordinate_fromTop = rand() % surface.size();
+        int possible_coordinate_fromLeft = rand() % surface.at(0).size();
+    }
+}
+
+Planet::Planet(StartupConfigs startupConfig)
 {
     numberOfObstacles = 0;
-    checkConfigsValid(planetConfig);
-    createSurface(planetConfig);
-    createObstacles(planetConfig);
+    checkConfigsValid(startupConfig.planet);
+    createSurface(startupConfig.planet);
+    createObstacles(startupConfig);
 }
 
 Planet::Planet(){};
