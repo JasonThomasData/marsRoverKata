@@ -1,5 +1,3 @@
-#include "surface-square.hpp"
-
 #ifndef IPlanet_h 
 #define IPlanet_h
 
