@@ -5,7 +5,7 @@ tests = $(testCases) unit-tests-main unit-test-runner
 all: $(src) $(tests) main simulation
 
 C++FLAGS= -std=c++17 -Wall -Wc++11-extensions
-.PHONY: all C++FLAGS
+.PHONY: all C++FLAGS clean
 
 build/io.o: src/io.cpp
 	clang++ $(C++FLAGS) -c src/io.cpp -o build/io.o
@@ -36,3 +36,6 @@ main: src/main.cpp
 
 simulation: $(src) 
 	clang++ $(C++FLAGS) $(src) build/main.o -o bin/simulation
+
+clean:
+	rm build/*

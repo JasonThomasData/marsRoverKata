@@ -3,7 +3,7 @@
 namespace IO
 {
     void displayInitialisationUsage();
-    void checkIsPositiveInteger(std::string arg);
-    int getNumericArgument(std::string arg);
-    StartupConfigs getStartupConfigs(int argc, char* argv[]);
+    void checkIsPositiveInteger(const std::string& arg);
+    int getNumericArgument(const std::string& arg);
+    StartupConfigs getStartupConfigs(int& argc, char* argv[]);
 }

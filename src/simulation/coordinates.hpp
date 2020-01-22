@@ -6,7 +6,7 @@ struct Coordinates
     int fromTop;
     int fromLeft;
 
-    bool isSame(Coordinates otherCoordinates)
+    bool isSame(const Coordinates& otherCoordinates)
     {
         if (fromTop == otherCoordinates.fromTop
             && fromLeft == otherCoordinates.fromLeft)

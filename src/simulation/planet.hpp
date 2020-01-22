@@ -12,15 +12,13 @@ class Planet: public IPlanet
 {
     public:
         Planet();
-        Planet(StartupConfigs startupConfig);
-        bool isObstacleAtCoordinate(Coordinates coordinates) override;
-        int countObstaclesOnSurface() override;
+        Planet(const StartupConfigs& startupConfig);
+        bool isObstacleAtCoordinate(const Coordinates& coordinates) override;
     private:
-        int numberOfObstacles;
         std::vector< std::vector<SurfaceSquare> > surface;
-        void createSurface(PlanetConfig planetConfig);
-        void createObstacles(StartupConfigs startupConfig);
-        void checkConfigsValid(PlanetConfig planetConfig);
+        void createSurface(const PlanetConfig& planetConfig);
+        void createObstacles(const StartupConfigs& startupConfig);
+        void checkConfigsValid(const PlanetConfig& planetConfig);
 };
 
 #endif

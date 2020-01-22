@@ -44,9 +44,10 @@ TEST_CASE("Checks obstacles are found and space left for robot")
     int robotFromTop = 1;
     int robotFromRight = 1;
 
-    StartupConfigs startupConfigs;
-    startupConfigs.planet = { surfaceWidth, surfaceHeight, obstacleNumber };
-    startupConfigs.robot.coordinates = { robotFromTop, robotFromRight };
+    const StartupConfigs startupConfigs = {
+        { surfaceWidth, surfaceHeight, obstacleNumber },
+        { robotFromTop, robotFromRight }
+    };
     Planet planet = Planet(startupConfigs);
 
     REQUIRE(planet.isObstacleAtCoordinate(obstacleLocation1) == true);

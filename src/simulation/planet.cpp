@@ -4,7 +4,7 @@
 #include "surface-square.hpp"
 #include "../configs/planet-config.hpp"
 
-void Planet::checkConfigsValid(PlanetConfig planetConfig)
+void Planet::checkConfigsValid(const PlanetConfig& planetConfig)
 {
     int surfaceArea = planetConfig.surfaceHeight * planetConfig.surfaceWidth;
     if(planetConfig.obstacleNumber >= surfaceArea)
@@ -15,7 +15,7 @@ void Planet::checkConfigsValid(PlanetConfig planetConfig)
     }
 }
 
-void Planet::createSurface(PlanetConfig planetConfig)
+void Planet::createSurface(const PlanetConfig& planetConfig)
 {
     for(int i = 0; i < planetConfig.surfaceHeight; i++)
     {
@@ -28,8 +28,9 @@ void Planet::createSurface(PlanetConfig planetConfig)
     }
 };
 
-void Planet::createObstacles(StartupConfigs startupConfig)
+void Planet::createObstacles(const StartupConfigs& startupConfig)
 {
+    int numberOfObstacles = 0;
     while(numberOfObstacles < startupConfig.planet.obstacleNumber)
     {
         Coordinates obstacleCoordinates;
@@ -44,23 +45,13 @@ void Planet::createObstacles(StartupConfigs startupConfig)
     }
 };
 
-bool Planet::isObstacleAtCoordinate(Coordinates coordinates)
+bool Planet::isObstacleAtCoordinate(const Coordinates& coordinates)
 {
-    if(surface[coordinates.fromTop][coordinates.fromLeft] == SurfaceSquare::obstacle)
-    {
-        return true;
-    };
-    return false;
+    return surface[coordinates.fromTop][coordinates.fromLeft] == SurfaceSquare::obstacle;
 }
 
-int Planet::countObstaclesOnSurface()
+Planet::Planet(const StartupConfigs& startupConfig)
 {
-    return numberOfObstacles;
-}
-
-Planet::Planet(StartupConfigs startupConfig)
-{
-    numberOfObstacles = 0;
     checkConfigsValid(startupConfig.planet);
     createSurface(startupConfig.planet);
     createObstacles(startupConfig);

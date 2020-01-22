@@ -15,7 +15,7 @@ void IO::displayInitialisationUsage()
     std::cout<< std::endl;
 }
 
-void IO::checkIsPositiveInteger(std::string arg)
+void IO::checkIsPositiveInteger(const std::string& arg)
 {
     for (int i = 0; i < arg.length(); i++) 
     {
@@ -26,14 +26,14 @@ void IO::checkIsPositiveInteger(std::string arg)
     }
 }
 
-int IO::getNumericArgument(std::string arg)
+int IO::getNumericArgument(const std::string& arg)
 {
     checkIsPositiveInteger(arg);
     const int number = std::stoi(arg);
     return number;
 }
 
-StartupConfigs IO::getStartupConfigs(int argc, char* argv[])
+StartupConfigs IO::getStartupConfigs(int& argc, char* argv[])
 {
     const int requiredArgs = 6;
     if (argc != requiredArgs)

@@ -13,9 +13,10 @@ TEST_CASE("Robot constructs successfully")
     int robotFromTop = 1;
     int robotFromRight = 1;
 
-    StartupConfigs startupConfigs;
-    startupConfigs.planet = { surfaceWidth, surfaceHeight, obstacleNumber };
-    startupConfigs.robot.coordinates = { robotFromTop, robotFromRight };
+    const StartupConfigs startupConfigs = {
+        { surfaceWidth, surfaceHeight, obstacleNumber },
+        { robotFromTop, robotFromRight }
+    };
     std::unique_ptr<IPlanet> planet = std::make_unique<Planet>(startupConfigs);
 
     REQUIRE_NOTHROW(Robot(std::move(planet), startupConfigs.robot));

@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     {
         configs = IO::getStartupConfigs(argc, argv);
         mars = std::make_unique<Planet>(configs);
-        robot = Robot(std::move(mars), configs.robot);
+        robot = Robot(std::move(mars), std::move(configs.robot));
     }
     catch(const std::exception& e)
     {
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
         while (true)
         {
             std::string instructions = IO::getInstructions();
-            std::string roverMoveReport = rover.interpretAndApplyInstructions(instructions);
+            std::string roverMoveReport = rover.interpretAndApplyInstructions(std::move(instructions));
             IO::returnOutput(roverMoveReport);
         }
 
