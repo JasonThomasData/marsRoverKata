@@ -38,3 +38,6 @@ Today, I made the IO module handle most, but not all logic. There is a small amo
 
 I decided that the planet should have a multidimensional array to represent its surface, so that the robot could say "tell me what's at x,y". The alternative is to have the surface dimensions represented as integers, and then have an array of obstacle coordinates. This would make sense for a small array of obstacles, but as the array grows then the complexity of finding coordinates would also grow and that grow at O(n), which is undesirable. If the obstacle coordinates were ordered according to their integer coordinates, you could increase efficiency by putting those in a hashmap, reducing the complexity to O(1). However, finding an element where you know the index in a multidimensional array is still O(1), so there's no reason to not use an array.
 
+### January, 24, 2020
+
+Today I learned it's better to have validation logic inside the constructors of classes/structs, rather than in other modules. It's best to not allow something to be constructed and used elsewhere if it's not valid. I will move as much validation logic into the constructors of objects as possible.

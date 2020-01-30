@@ -1,6 +1,6 @@
 
-src = build/io.o build/planet.o build/robot.o
-testCases = build/io-unit-tests.o build/planet-unit-tests.o build/robot-unit-tests.o
+src = build/io.o build/configs.o build/planet.o build/robot.o
+testCases = build/io-unit-tests.o build/config-unit-tests.o build/planet-unit-tests.o build/robot-unit-tests.o
 tests = $(testCases) unit-tests-main unit-test-runner
 all: $(src) $(tests) main simulation
 
@@ -10,6 +10,9 @@ C++FLAGS= -std=c++17 -Wall -Wc++11-extensions
 build/io.o: src/io.cpp
 	clang++ $(C++FLAGS) -c src/io.cpp -o build/io.o
 
+build/configs.o: src/configs/startup-config.cpp
+	clang++ $(C++FLAGS) -c src/configs/startup-config.cpp -o build/configs.o
+
 build/planet.o: src/simulation/planet.cpp
 	clang++ $(C++FLAGS) -c src/simulation/planet.cpp -o build/planet.o
 
@@ -18,6 +21,9 @@ build/robot.o: src/simulation/robot.cpp
 
 build/io-unit-tests.o: tests/unit/io.cpp
 	clang++ $(C++FLAGS) -Wno-writable-strings -c tests/unit/io.cpp -o build/io-unit-tests.o
+
+build/config-unit-tests.o: tests/unit/startup-config.cpp
+	clang++ $(C++FLAGS) -Wno-writable-strings -c tests/unit/startup-config.cpp -o build/config-unit-tests.o
 
 build/planet-unit-tests.o: tests/unit/planet.cpp
 	clang++ $(C++FLAGS) -Wno-writable-strings -c tests/unit/planet.cpp -o build/planet-unit-tests.o

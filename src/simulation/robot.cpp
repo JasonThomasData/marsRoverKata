@@ -5,7 +5,7 @@
 #include "robot.hpp"
 #include "../configs/robot-config.hpp"
 
-void Robot::establishRobotCoordinates(Coordinates potentialCoordinates)
+void Robot::validateRobotCoordinates(const Coordinates& potentialCoordinates)
 {
     if(planet->isObstacleAtCoordinate(potentialCoordinates))
     {
@@ -13,14 +13,13 @@ void Robot::establishRobotCoordinates(Coordinates potentialCoordinates)
         errorMessage<< "There is an obstacle at your preferred starting point. Coordinates not set."<< std::endl; 
         throw std::invalid_argument(errorMessage.str());
     }
-
-    coordinates = potentialCoordinates;
 }
 
 Robot::Robot(std::unique_ptr<IPlanet> planet, RobotConfig robotConfig)
-    :planet(std::move(planet))
+    :planet(std::move(planet)),
+    coordinates(std::move(robotConfig.coordinates))
 {
-    establishRobotCoordinates(std::move(robotConfig.coordinates));
+    validateRobotCoordinates(robotConfig.coordinates);
 }
 
 Robot::Robot(){};

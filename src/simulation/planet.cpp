@@ -4,17 +4,6 @@
 #include "surface-square.hpp"
 #include "../configs/planet-config.hpp"
 
-void Planet::checkConfigsValid(const PlanetConfig& planetConfig)
-{
-    int surfaceArea = planetConfig.surfaceHeight * planetConfig.surfaceWidth;
-    if(planetConfig.obstacleNumber >= surfaceArea)
-    {
-        std::ostringstream errorMessage;
-        errorMessage<< "There is no room to place the robot on this planet (surface area of "<< surfaceArea<< " and "<< planetConfig.obstacleNumber<< " obstacles)."; 
-        throw std::invalid_argument(errorMessage.str());
-    }
-}
-
 void Planet::createSurface(const PlanetConfig& planetConfig)
 {
     for(int i = 0; i < planetConfig.surfaceHeight; i++)
@@ -36,6 +25,7 @@ void Planet::createObstacles(const StartupConfigs& startupConfig)
         Coordinates obstacleCoordinates;
         obstacleCoordinates.fromTop = rand() % startupConfig.planet.surfaceHeight;
         obstacleCoordinates.fromLeft = rand() % startupConfig.planet.surfaceWidth;
+        //Replace loop with a randomised list, pop off end (gauranteed to halt in n loops)
         if(surface[obstacleCoordinates.fromTop][obstacleCoordinates.fromLeft] != SurfaceSquare::obstacle
             && !obstacleCoordinates.isSame(startupConfig.robot.coordinates))
         {
@@ -52,7 +42,6 @@ bool Planet::isObstacleAtCoordinate(const Coordinates& coordinates)
 
 Planet::Planet(const StartupConfigs& startupConfig)
 {
-    checkConfigsValid(startupConfig.planet);
     createSurface(startupConfig.planet);
     createObstacles(startupConfig);
 }

@@ -11,11 +11,11 @@ TEST_CASE("Robot constructs successfully")
     int surfaceHeight = 3;
     int obstacleNumber = 5;
     int robotFromTop = 1;
-    int robotFromRight = 1;
+    int robotFromLeft = 1;
 
     const StartupConfigs startupConfigs = {
         { surfaceWidth, surfaceHeight, obstacleNumber },
-        { robotFromTop, robotFromRight }
+        { robotFromTop, robotFromLeft }
     };
     std::unique_ptr<IPlanet> planet = std::make_unique<Planet>(startupConfigs);
 

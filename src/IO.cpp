@@ -7,12 +7,21 @@
 
 void IO::displayInitialisationUsage()
 {
-    const std::string usage = "correct usage: ./bin/simulation <PLANET_WIDTH> <PLANET_HEIGHT> <NUMBER_OF_OBSTACLES> <ROBOT_X_COORDINATE> <ROBOT_Y_COORDINATE>";
+    const std::string usage = "correct usage: ./bin/simulation <PLANET_WIDTH> <PLANET_HEIGHT> <NUMBER_OF_OBSTACLES> <ROBOT_COORDINATE_FROM_TOP> <ROBOT_COORDINATE_FROM_LEFT>";
     const std::string example = "eg: ./bin/simulation 10 12 5 4 5";
     std::cout<< std::endl;
     std::cout<< usage<< std::endl;
     std::cout<< example<< std::endl;
     std::cout<< std::endl;
+}
+
+void IO::checkNumberOfArgsIsValid(int& argc)
+{
+    const int requiredArgs = 6;
+    if (argc != requiredArgs)
+    {
+        throw std::invalid_argument("Incorrect number of args");
+    }
 }
 
 void IO::checkIsPositiveInteger(const std::string& arg)
@@ -35,20 +44,12 @@ int IO::getNumericArgument(const std::string& arg)
 
 StartupConfigs IO::getStartupConfigs(int& argc, char* argv[])
 {
-    const int requiredArgs = 6;
-    if (argc != requiredArgs)
-    {
-        throw std::invalid_argument("Incorrect number of args");
-    }
+    checkNumberOfArgsIsValid(argc);
 
-    PlanetConfig planetConfig;
-    planetConfig.surfaceWidth = getNumericArgument(argv[1]);
-    planetConfig.surfaceHeight = getNumericArgument(argv[2]);
-    planetConfig.obstacleNumber = getNumericArgument(argv[3]);
+    const StartupConfigs startupConfigs = {
+        { getNumericArgument(argv[1]), getNumericArgument(argv[2]), getNumericArgument(argv[3]) },
+        { getNumericArgument(argv[4]), getNumericArgument(argv[5]) }
+    };
 
-    RobotConfig robotConfig;
-    robotConfig.coordinates = { getNumericArgument(argv[4]), getNumericArgument(argv[5]) };
-
-    StartupConfigs startupConfigs = { planetConfig, robotConfig };
     return startupConfigs;
 }

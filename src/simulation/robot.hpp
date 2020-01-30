@@ -16,7 +16,7 @@ class Robot
         std::unique_ptr<IPlanet> planet;
         Coordinates coordinates;
         std::vector<std::string> instructionQueue;
-        void establishRobotCoordinates(Coordinates potentialCoordinates);
+        void validateRobotCoordinates(const Coordinates& potentialCoordinates);
 };
 
 #endif

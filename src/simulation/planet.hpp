@@ -18,7 +18,6 @@ class Planet: public IPlanet
         std::vector< std::vector<SurfaceSquare> > surface;
         void createSurface(const PlanetConfig& planetConfig);
         void createObstacles(const StartupConfigs& startupConfig);
-        void checkConfigsValid(const PlanetConfig& planetConfig);
 };
 
 #endif
