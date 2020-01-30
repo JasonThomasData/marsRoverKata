@@ -7,7 +7,7 @@
 class StartupConfigs
 {
     public:
-        StartupConfigs(PlanetConfig planet, RobotConfig robot);
+        StartupConfigs(const PlanetConfig planet, const RobotConfig robot);
         StartupConfigs();
         PlanetConfig planet;
         RobotConfig robot;
@@ -15,6 +15,5 @@ class StartupConfigs
         void checkObstaclesFewerThanSurfaceArea();
         void checkSpaceForRobot();
         void checkRobotIsOnSurface();
-        //Check valid stuff
 };
 #endif

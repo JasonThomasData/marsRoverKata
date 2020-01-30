@@ -42,7 +42,7 @@ void StartupConfigs::checkRobotIsOnSurface()
     }
 }
 
-StartupConfigs::StartupConfigs(PlanetConfig planetConfig, RobotConfig robotConfig)
+StartupConfigs::StartupConfigs(const PlanetConfig planetConfig, const RobotConfig robotConfig)
     :planet(std::move(planetConfig)),
     robot(std::move(robotConfig))
 {

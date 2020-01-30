@@ -46,10 +46,9 @@ StartupConfigs IO::getStartupConfigs(int& argc, char* argv[])
 {
     checkNumberOfArgsIsValid(argc);
 
-    const StartupConfigs startupConfigs = {
-        { getNumericArgument(argv[1]), getNumericArgument(argv[2]), getNumericArgument(argv[3]) },
-        { getNumericArgument(argv[4]), getNumericArgument(argv[5]) }
-    };
+    PlanetConfig planetConfig = { getNumericArgument(argv[1]), getNumericArgument(argv[2]), getNumericArgument(argv[3]) };
+    RobotConfig robotConfig = { getNumericArgument(argv[4]), getNumericArgument(argv[5]) };
+    const StartupConfigs startupConfigs = StartupConfigs(std::move(planetConfig), std::move(robotConfig));
 
     return startupConfigs;
 }
