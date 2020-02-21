@@ -10,7 +10,7 @@ namespace IO
     void checkNumberOfArgsIsValid(int& argc);
     void checkIsPositiveInteger(const std::string& arg);
     int getNumericArgument(const std::string& arg);
-    void toLowercaseString(std::string& arg);
+    std::string toLowercaseString(const std::string& arg);
     StartupConfigs getStartupConfigs(int& argc, char* argv[]);
-    Direction getDirection(std::string arg);
+    Direction getDirection(const std::string& arg);
 }

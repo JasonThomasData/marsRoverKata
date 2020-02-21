@@ -14,8 +14,7 @@ TEST_CASE("argv converted to int" )
 TEST_CASE("Upper case string to lower case" )
 {
     std::string arg = "UPPERCASE STRING";
-    IO::toLowercaseString(arg);
-    REQUIRE(arg == "uppercase string");
+    REQUIRE(IO::toLowercaseString(arg) == "uppercase string");
 }
 
 TEST_CASE("No args" )

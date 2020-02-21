@@ -43,31 +43,34 @@ int IO::getNumericArgument(const std::string& arg)
     return number;
 }
 
-void IO::toLowercaseString(std::string& arg)
+std::string IO::toLowercaseString(const std::string& arg)
 {
+    std::string lowerCaseArg = arg;
     std::transform(
         arg.begin(),
         arg.end(),
-        arg.begin(),
+        lowerCaseArg.begin(),
         [](unsigned char c){ return std::tolower(c); });
+    return lowerCaseArg;
 }
 
-Direction IO::getDirection(std::string arg)
+Direction IO::getDirection(const std::string& arg)
 {
-    toLowercaseString(arg);
-    if (arg == "north")
+    //TODO - can this be a map, with enum values indexed with their string key values?
+    std::string lowerCaseArg = toLowercaseString(arg);
+    if (lowerCaseArg == "north")
     {
         return Direction::north;
     }
-    else if (arg == "east")
+    else if (lowerCaseArg == "east")
     {
         return Direction::east;
     }
-    else if (arg == "south")
+    else if (lowerCaseArg == "south")
     {
         return Direction::south;
     }
-    else if (arg == "west")
+    else if (lowerCaseArg == "west")
     {
         return Direction::west;
     }

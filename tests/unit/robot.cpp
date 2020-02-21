@@ -20,7 +20,6 @@ TEST_CASE("Robot constructs successfully")
         { { robotFromTop, robotFromLeft }, robotDirection }
     };
     std::unique_ptr<IPlanet> planet = std::make_unique<Planet>(startupConfigs);
-    Robot(std::move(planet), startupConfigs.robot);
 
     REQUIRE_NOTHROW(Robot(std::move(planet), startupConfigs.robot));
 }
