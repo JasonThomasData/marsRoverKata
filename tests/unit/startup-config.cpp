@@ -4,6 +4,8 @@
 #include "../../src/configs/planet-config.hpp"
 #include "../../src/configs/robot-config.hpp"
 #include "../../src/configs/startup-config.hpp"
+#include "../../src/simulation/coordinates.hpp"
+#include "../../src/simulation/directions.hpp"
 
 TEST_CASE("Configs constructed successfully")
 {
@@ -12,9 +14,11 @@ TEST_CASE("Configs constructed successfully")
     int obstacleNumber = 5;
     int robotFromTop = 1;
     int robotFromLeft = 1;
+    Direction direction = Direction::west;
 
     PlanetConfig planetConfig = { surfaceWidth, surfaceHeight, obstacleNumber };
-    RobotConfig robotConfig = { robotFromTop, robotFromLeft };
+    Coordinates coordinates = { robotFromTop, robotFromLeft };
+    RobotConfig robotConfig = { coordinates, direction };
 
     REQUIRE_NOTHROW( StartupConfigs( std::move(planetConfig),
                                    std::move(robotConfig)) );
@@ -27,9 +31,11 @@ TEST_CASE("Not enough space on surface for obstacles")
     int obstacleNumber = 7;
     int robotFromTop = 1;
     int robotFromLeft = 1;
+    Direction direction = Direction::west;
 
     PlanetConfig planetConfig = { surfaceWidth, surfaceHeight, obstacleNumber };
-    RobotConfig robotConfig = { robotFromTop, robotFromLeft };
+    Coordinates coordinates = { robotFromTop, robotFromLeft };
+    RobotConfig robotConfig = { coordinates, direction };
 
     REQUIRE_THROWS_AS( StartupConfigs( std::move(planetConfig),
                                    std::move(robotConfig) ),
@@ -43,9 +49,11 @@ TEST_CASE("Not enough space on surface for robot")
     int obstacleNumber = 6;
     int robotFromTop = 1;
     int robotFromLeft = 1;
+    Direction direction = Direction::west;
 
     PlanetConfig planetConfig = { surfaceWidth, surfaceHeight, obstacleNumber };
-    RobotConfig robotConfig = { robotFromTop, robotFromLeft };
+    Coordinates coordinates = { robotFromTop, robotFromLeft };
+    RobotConfig robotConfig = { coordinates, direction };
 
     REQUIRE_THROWS_AS( StartupConfigs( std::move(planetConfig),
                                    std::move(robotConfig) ),
@@ -59,9 +67,11 @@ TEST_CASE("Robot not placed on surface")
     int obstacleNumber = 1;
     int robotFromTop = 10;
     int robotFromLeft = 10;
+    Direction direction = Direction::west;
 
     PlanetConfig planetConfig = { surfaceWidth, surfaceHeight, obstacleNumber };
-    RobotConfig robotConfig = { robotFromTop, robotFromLeft };
+    Coordinates coordinates = { robotFromTop, robotFromLeft };
+    RobotConfig robotConfig = { coordinates, direction };
 
     REQUIRE_THROWS_AS( StartupConfigs( std::move(planetConfig),
                                    std::move(robotConfig) ),

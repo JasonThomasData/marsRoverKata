@@ -25,7 +25,7 @@ void Planet::createObstacles(const StartupConfigs& startupConfig)
         Coordinates obstacleCoordinates;
         obstacleCoordinates.fromTop = rand() % startupConfig.planet.surfaceHeight;
         obstacleCoordinates.fromLeft = rand() % startupConfig.planet.surfaceWidth;
-        //Replace loop with a randomised list, pop off end (gauranteed to halt in n loops)
+        //TODO - Replace loop with a randomised list, pop off end (gauranteed to halt in n loops)
         if(surface[obstacleCoordinates.fromTop][obstacleCoordinates.fromLeft] != SurfaceSquare::obstacle
             && !obstacleCoordinates.isSame(startupConfig.robot.coordinates))
         {
@@ -42,6 +42,7 @@ bool Planet::isObstacleAtCoordinate(const Coordinates& coordinates)
 
 Planet::Planet(const StartupConfigs& startupConfig)
 {
+    //TODO - Is there a way to make the surface immutable? Maybe std::move it in as a dependency
     createSurface(startupConfig.planet);
     createObstacles(startupConfig);
 }

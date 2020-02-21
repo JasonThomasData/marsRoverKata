@@ -3,6 +3,7 @@
 #include "../../src/configs/startup-config.hpp"
 #include "../../src/simulation/planet.hpp"
 #include "../../src/simulation/coordinates.hpp"
+#include "../../src/simulation/directions.hpp"
 
 TEST_CASE("Planet constructs successfully")
 {
@@ -12,10 +13,11 @@ TEST_CASE("Planet constructs successfully")
     int obstacleNumber = 3;
     int robotFromTop = 1;
     int robotFromLeft = 1;
+    Direction robotDirection = Direction::west;
 
-    const StartupConfigs startupConfigs = {
+    StartupConfigs startupConfigs = {
         { surfaceWidth, surfaceHeight, obstacleNumber },
-        { robotFromTop, robotFromLeft }
+        { { robotFromTop, robotFromLeft } , robotDirection }
     };
 
     //Act

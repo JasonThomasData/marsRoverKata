@@ -25,7 +25,6 @@ int main(int argc, char *argv[])
     try
     {
         /*
-
         while (true)
         {
             std::string instructions = IO::getInstructions();
