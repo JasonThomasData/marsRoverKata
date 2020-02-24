@@ -12,7 +12,8 @@ On all platforms (tested on Mac): `make`
 
 ### Challenge
 
-- https://github.com/MYOB-Technology/General_Developer/blob/master/katas/kata-mars-rover/kata-mars-rover.md
+- saved in [repo](/challange)
+- originally from [MYOB](https://github.com/MYOB-Technology/General_Developer/blob/master/katas/kata-mars-rover/kata-mars-rover.md)
 
 #### Mars Rover API
 
