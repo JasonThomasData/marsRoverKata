@@ -18,6 +18,8 @@ class SpatialAwareness : public ISpatialAwareness
         void turnLeft() override;
         void turnRight() override;
     private:
+        Coordinates getNextCoordinatesChange(Movement movement);
+        Coordinates applyChange(Coordinates coordinates, const Coordinates& changeInCoordinates);
         Direction directionFacing;
         Coordinates coordinates;
 };

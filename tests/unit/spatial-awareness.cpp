@@ -8,13 +8,21 @@
 #include "../../src/simulation/planet.hpp"
 #include "../../src/simulation/spatial-awareness.hpp"
 
+class TestFixtures 
+{
+    private:
+        int robotFromTop = 3;
+        int robotFromLeft = 3;
+    public:
+        Coordinates coordinates = { robotFromTop, robotFromLeft };
+        Direction directionFacing = Direction::north;
+};
+
+/* 
 TEST_CASE("SpatialAwareness turns left")
 {
-    int robotFromTop = 1;
-    int robotFromLeft = 1;
-    Coordinates coordinates = { robotFromLeft, robotFromLeft };
-    Direction directionFacing = Direction::north;
-    SpatialAwareness spatialAwareness = SpatialAwareness(std::move(directionFacing), std::move(coordinates));
+    TestFixtures fixtures = TestFixtures();
+    SpatialAwareness spatialAwareness = SpatialAwareness(std::move(fixtures.directionFacing), std::move(fixtures.coordinates));
 
     spatialAwareness.turnLeft();
     REQUIRE(spatialAwareness.getDirectionFacing() == Direction::west);
@@ -28,11 +36,8 @@ TEST_CASE("SpatialAwareness turns left")
 
 TEST_CASE("SpatialAwareness turns right")
 {
-    int robotFromTop = 1;
-    int robotFromLeft = 1;
-    Coordinates coordinates = { robotFromLeft, robotFromLeft };
-    Direction directionFacing = Direction::north;
-    SpatialAwareness spatialAwareness = SpatialAwareness(std::move(directionFacing), std::move(coordinates));
+    TestFixtures fixtures = TestFixtures();
+    SpatialAwareness spatialAwareness = SpatialAwareness(std::move(fixtures.directionFacing), std::move(fixtures.coordinates));
 
     spatialAwareness.turnRight();
     REQUIRE(spatialAwareness.getDirectionFacing() == Direction::east);
@@ -42,4 +47,28 @@ TEST_CASE("SpatialAwareness turns right")
     REQUIRE(spatialAwareness.getDirectionFacing() == Direction::west);
     spatialAwareness.turnRight();
     REQUIRE(spatialAwareness.getDirectionFacing() == Direction::north);
+}
+
+*/
+
+bool TestSpatialAwarenessReturnsNextCoordinates(Movement movement, Direction directionFacing, Coordinates expectedNextCoordinates)
+{
+    TestFixtures fixtures = TestFixtures();
+    SpatialAwareness spatialAwareness = SpatialAwareness(std::move(directionFacing), std::move(fixtures.coordinates));
+    Coordinates nextCoordinates = spatialAwareness.getNextCoordinates(movement);
+
+    return expectedNextCoordinates.fromTop == nextCoordinates.fromTop &&
+        expectedNextCoordinates.fromLeft == nextCoordinates.fromLeft;
+}
+
+TEST_CASE("SpatialAwareness returns next coordinates")
+{
+    REQUIRE(TestSpatialAwarenessReturnsNextCoordinates(Movement::forward, Direction::north, { 2, 3 }));
+    REQUIRE(TestSpatialAwarenessReturnsNextCoordinates(Movement::forward, Direction::east, { 3, 4 }));
+    REQUIRE(TestSpatialAwarenessReturnsNextCoordinates(Movement::forward, Direction::south, { 4, 3 }));
+    REQUIRE(TestSpatialAwarenessReturnsNextCoordinates(Movement::forward, Direction::west, { 3, 2 }));
+    REQUIRE(TestSpatialAwarenessReturnsNextCoordinates(Movement::backward, Direction::north, { 4, 3 }));
+    REQUIRE(TestSpatialAwarenessReturnsNextCoordinates(Movement::backward, Direction::east, { 3, 2 }));
+    REQUIRE(TestSpatialAwarenessReturnsNextCoordinates(Movement::backward, Direction::south, { 2, 3 }));
+    REQUIRE(TestSpatialAwarenessReturnsNextCoordinates(Movement::backward, Direction::west, { 3, 4 }));
 }
