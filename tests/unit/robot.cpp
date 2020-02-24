@@ -6,39 +6,32 @@
 #include "../../src/simulation/robot.hpp"
 #include "../../src/simulation/i_planet.hpp"
 #include "../../src/simulation/planet.hpp"
+#include "../../src/simulation/spatial-awareness.hpp"
+#include "../../src/simulation/coordinates.hpp"
 
-TEST_CASE("Robot constructs successfully")
+class TestFixtures 
 {
-    //This is repeated elsewhere. Can this be a test fixture?
-    int surfaceWidth = 14;
-    int surfaceHeight = 3;
-    int obstacleNumber = 5;
-    int robotFromTop = 1;
-    int robotFromLeft = 1;
-    Direction robotDirection = Direction::south;
-    const StartupConfigs startupConfigs = {
-        { surfaceWidth, surfaceHeight, obstacleNumber },
-        { { robotFromTop, robotFromLeft }, robotDirection }
-    };
-    std::unique_ptr<IPlanet> planet = std::make_unique<Planet>(startupConfigs);
-
-    REQUIRE_NOTHROW(Robot(std::move(planet), startupConfigs.robot));
-}
+    private:
+        int surfaceWidth = 14;
+        int surfaceHeight = 3;
+        int obstacleNumber = 5;
+        int robotFromTop = 1;
+        int robotFromLeft = 1;
+        Direction robotDirection = Direction::south;
+        Coordinates coordinates = { robotFromTop, robotFromLeft };
+        const StartupConfigs startupConfigs = {
+            { surfaceWidth, surfaceHeight, obstacleNumber },
+            { coordinates, robotDirection }
+        };
+    public:
+        std::unique_ptr<IPlanet> planet = std::make_unique<Planet>(startupConfigs);
+        std::unique_ptr<ISpatialAwareness> spatialAwareness = std::make_unique<SpatialAwareness>(robotDirection, coordinates);
+};
 
 TEST_CASE("Robot can receive valid instuctions")
 {
-    int surfaceWidth = 14;
-    int surfaceHeight = 3;
-    int obstacleNumber = 5;
-    int robotFromTop = 1;
-    int robotFromLeft = 1;
-    Direction robotDirection = Direction::south;
-    const StartupConfigs startupConfigs = {
-        { surfaceWidth, surfaceHeight, obstacleNumber },
-        { { robotFromTop, robotFromLeft }, robotDirection }
-    };
-    std::unique_ptr<IPlanet> planet = std::make_unique<Planet>(startupConfigs);
-    Robot robot = Robot(std::move(planet), startupConfigs.robot);
+    TestFixtures fixtures = TestFixtures();
+    Robot robot = Robot(std::move(fixtures.planet), std::move(fixtures.spatialAwareness));
 
     const std::string instructions = "flbr";
 
@@ -47,20 +40,24 @@ TEST_CASE("Robot can receive valid instuctions")
 
 TEST_CASE("Robot rejects invalid instuctions")
 {
-    int surfaceWidth = 14;
-    int surfaceHeight = 3;
-    int obstacleNumber = 5;
-    int robotFromTop = 1;
-    int robotFromLeft = 1;
-    Direction robotDirection = Direction::south;
-    const StartupConfigs startupConfigs = {
-        { surfaceWidth, surfaceHeight, obstacleNumber },
-        { { robotFromTop, robotFromLeft }, robotDirection }
-    };
-    std::unique_ptr<IPlanet> planet = std::make_unique<Planet>(startupConfigs);
-    Robot robot = Robot(std::move(planet), startupConfigs.robot);
+    TestFixtures fixtures = TestFixtures();
+    Robot robot = Robot(std::move(fixtures.planet), std::move(fixtures.spatialAwareness));
 
-    const std::string instructions = "flbr.";
+    REQUIRE_THROWS_AS(robot.interpretInstructions(""), std::invalid_argument);
+    REQUIRE_THROWS_AS(robot.interpretInstructions("fl.br"), std::invalid_argument);
+    REQUIRE_THROWS_AS(robot.interpretInstructions("1flbr"), std::invalid_argument);
+}
 
-    REQUIRE_THROWS_AS(robot.interpretInstructions(instructions), std::invalid_argument);
+TEST_CASE("Robot can understand instructions to translate to movements")
+{
+    TestFixtures fixtures = TestFixtures();
+    Robot robot = Robot(std::move(fixtures.planet), std::move(fixtures.spatialAwareness));
+
+    const std::string instructions = "flbr";
+    std::vector<Movement> translatedMovements = robot.interpretInstructions(instructions);
+
+    REQUIRE(translatedMovements.at(0) == Movement::forward);
+    REQUIRE(translatedMovements.at(1) == Movement::left);
+    REQUIRE(translatedMovements.at(2) == Movement::backward);
+    REQUIRE(translatedMovements.at(3) == Movement::right);
 }

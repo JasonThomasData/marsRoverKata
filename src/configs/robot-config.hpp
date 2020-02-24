@@ -7,7 +7,7 @@
 struct RobotConfig
 {
     Coordinates coordinates;
-    Direction direction;
+    Direction directionFacing;
 };
 
 #endif

@@ -54,7 +54,7 @@ TEST_CASE("argv received, and an appropriate StartupConfigs struct is returned" 
     REQUIRE(configs.planet.obstacleNumber == 5);
     REQUIRE(configs.robot.coordinates.fromTop == 5);
     REQUIRE(configs.robot.coordinates.fromLeft == 4);
-    REQUIRE(configs.robot.direction == Direction::north);
+    REQUIRE(configs.robot.directionFacing == Direction::north);
 }
 
 TEST_CASE("argv has a wrong type, error thrown" )

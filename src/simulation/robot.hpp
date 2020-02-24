@@ -3,6 +3,7 @@
 #include "directions.hpp"
 #include "movements.hpp"
 #include "i_planet.hpp"
+#include "i_spatial-awareness.hpp"
 #include "../configs/robot-config.hpp"
 
 #ifndef Robot_h 
@@ -12,12 +13,12 @@ class Robot
 {
     public:
         Robot();
-        Robot(std::unique_ptr<IPlanet> planet, RobotConfig robotConfig);
+        Robot(std::unique_ptr<IPlanet> planet, std::unique_ptr<ISpatialAwareness> spatialAwareness);
         std::vector<Movement> interpretInstructions(const std::string& instructions);
     private:
+        std::string validInstructionsMessage;
         std::unique_ptr<IPlanet> planet;
-        Coordinates coordinates;
-        Direction direction;
+        std::unique_ptr<ISpatialAwareness> spatialAwareness;
         Movement getMovementInstruction(const char& instruction);
         std::vector<std::string> instructionQueue;
         void validateRobotCoordinates(const Coordinates& potentialCoordinates);
