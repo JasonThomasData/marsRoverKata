@@ -13,7 +13,7 @@ On all platforms (tested on Mac): `make`
 
 ### Challenge
 
-- saved in [repo](/challange)
+- saved in [repo](challange.md)
 - originally from [MYOB](https://github.com/MYOB-Technology/General_Developer/blob/master/katas/kata-mars-rover/kata-mars-rover.md)
 
 #### Mars Rover API
