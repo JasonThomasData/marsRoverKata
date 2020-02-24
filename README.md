@@ -1,14 +1,15 @@
 ### Install
 
-On Mac:
+    #tested for Mac and Debian/Mint/Ubuntu
 
-    brew install llvm
+    ./configure
+    make
 
 On all platforms (tested on Mac): `make`
 
 ### Tests
 
-    make && ./bin/unit-tests
+    ./bin/unit-tests
 
 ### Challenge
 
@@ -28,5 +29,4 @@ On all platforms (tested on Mac): `make`
 - DDD
 - Tell Don't Ask
 - Using C++
-- CI/CD
 
