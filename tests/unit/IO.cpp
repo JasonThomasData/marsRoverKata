@@ -17,6 +17,19 @@ TEST_CASE("Upper case string to lower case" )
     REQUIRE(IO::toLowercaseString(arg) == "uppercase string");
 }
 
+TEST_CASE("Gets direction successfully" )
+{
+    REQUIRE(IO::getDirection("north") == Direction::north);
+    REQUIRE(IO::getDirection("east") == Direction::east);
+    REQUIRE(IO::getDirection("south") == Direction::south);
+    REQUIRE(IO::getDirection("west") == Direction::west);
+}
+
+TEST_CASE("False direction" )
+{
+    REQUIRE_THROWS_AS(IO::getDirection("over there"), std::invalid_argument);
+}
+
 TEST_CASE("No args" )
 {
     int argc = 1;

@@ -1,4 +1,5 @@
 #include <sstream>
+#include <vector>
 #include <stdexcept>
 #include "coordinates.hpp"
 #include "directions.hpp"
@@ -17,23 +18,41 @@ void Robot::validateRobotCoordinates(const Coordinates& potentialCoordinates)
     }
 }
 
-std::string Robot::interpretAndApplyInstructions(const std::string& instructions)
+std::vector<Movement> Robot::interpretInstructions(const std::string& instructions)
 {
+    std::vector<Movement> movements;
     for(const char& instruction : instructions)
     {
-        if (!checkInstructionIsValid(instruction))
-        {
-            std::ostringstream errorMessage;
-            errorMessage<< "The instruction {} was invalid"<< std::endl; 
-            throw std::invalid_argument(errorMessage.str());
-        }
+        Movement movement = getMovementInstruction(instruction);
+        movements.push_back(movement);
     }
-    return instructions;
+    return movements;
 }
 
-bool Robot::checkInstructionIsValid(const char& instruction)
+Movement Robot::getMovementInstruction(const char& instruction)
 {
-    return true;
+    if (instruction == 'f')
+    {
+        return Movement::forward;
+    }
+    else if (instruction == 'b')
+    {
+        return Movement::backward;
+    }
+    else if (instruction == 'l')
+    {
+        return Movement::left;
+    }
+    else if (instruction == 'r')
+    {
+        return Movement::right;
+    }
+    else
+    {
+        std::ostringstream errorMessage;
+        errorMessage<< "The instruction \'"<< instruction<< "\' is not valid. \n Valid instructions are: f (forward), b (backward), l (left), r (right)";
+        throw std::invalid_argument(errorMessage.str());
+    }
 }
 
 Robot::Robot(std::unique_ptr<IPlanet> planet, RobotConfig robotConfig)
