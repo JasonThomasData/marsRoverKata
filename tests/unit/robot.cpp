@@ -1,4 +1,5 @@
 #include <vector>
+#include <stdexcept>
 #include "../../lib/catch.hpp"
 #include "../../src/configs/startup-config.hpp"
 #include "../../src/simulation/directions.hpp"
@@ -41,5 +42,25 @@ TEST_CASE("Robot can receive valid instuctions")
 
     const std::string instructions = "flbr";
 
-    REQUIRE_NOTHROW(robot.interpretAndApplyInstructions(instructions));
+    REQUIRE_NOTHROW(robot.interpretInstructions(instructions));
+}
+
+TEST_CASE("Robot rejects invalid instuctions")
+{
+    int surfaceWidth = 14;
+    int surfaceHeight = 3;
+    int obstacleNumber = 5;
+    int robotFromTop = 1;
+    int robotFromLeft = 1;
+    Direction robotDirection = Direction::south;
+    const StartupConfigs startupConfigs = {
+        { surfaceWidth, surfaceHeight, obstacleNumber },
+        { { robotFromTop, robotFromLeft }, robotDirection }
+    };
+    std::unique_ptr<IPlanet> planet = std::make_unique<Planet>(startupConfigs);
+    Robot robot = Robot(std::move(planet), startupConfigs.robot);
+
+    const std::string instructions = "flbr.";
+
+    REQUIRE_THROWS_AS(robot.interpretInstructions(instructions), std::invalid_argument);
 }
