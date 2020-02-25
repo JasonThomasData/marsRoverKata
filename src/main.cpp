@@ -15,7 +15,12 @@ int main(int argc, char *argv[])
     {
         configs = IO::getStartupConfigs(argc, argv);
         mars = std::make_unique<Planet>(configs);
-        spatialAwareness = std::make_unique<SpatialAwareness>(std::move(configs.robot.directionFacing), std::move(configs.robot.coordinates));
+        spatialAwareness = std::make_unique<SpatialAwareness>(
+            std::move(configs.robot.directionFacing),
+            std::move(configs.robot.coordinates),
+            std::move(configs.robot.coordinateChangeMoveForward),
+            std::move(configs.robot.coordinateChangeMoveBackward)
+        );
         robot = Robot(std::move(mars), std::move(spatialAwareness));
     }
     catch(const std::exception& e)

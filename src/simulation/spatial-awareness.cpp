@@ -23,53 +23,20 @@ Coordinates SpatialAwareness::applyChange(Coordinates coordinates, const Coordin
 
 Coordinates SpatialAwareness::getNextCoordinatesChange(Movement movement)
 {
-    //TODO - this seems inefficient, make a map instead
-    Coordinates nextCoordinates;
     if (movement == Movement::forward)
     {
-        if (directionFacing == Direction::north)
-        {
-            nextCoordinates = { -1, 0 };
-        }
-        else if (directionFacing == Direction::east)
-        {
-            nextCoordinates = { 0, 1 };
-        }
-        else if (directionFacing == Direction::south)
-        {
-            nextCoordinates = { 1, 0 };
-        }
-        else
-        {
-            nextCoordinates = { 0, -1 };
-        }
+        return coordinateChangeMoveForward[directionFacing];
     }
     else if (movement == Movement::backward)
     {
-        if (directionFacing == Direction::north)
-        {
-            nextCoordinates = { 1, 0 };
-        }
-        else if (directionFacing == Direction::east)
-        {
-            nextCoordinates = { 0, -1 };
-        }
-        else if (directionFacing == Direction::south)
-        {
-            nextCoordinates = { -1, 0 };
-        }
-        else
-        {
-            nextCoordinates = { 0, 1 };
-        }
+        return coordinateChangeMoveBackward[directionFacing];
     }
     else
     {
         std::ostringstream errorMessage;
-        errorMessage<< "SpatialAwareness couldn't use the move order: "<< movement<< " to change coordinates ";
+        errorMessage<< "SpatialAwareness couldn't use the move order to change coordinates ";
         throw std::invalid_argument(errorMessage.str());
     }
-    return nextCoordinates;
 }
 
 Direction SpatialAwareness::getDirectionFacing()
@@ -77,11 +44,34 @@ Direction SpatialAwareness::getDirectionFacing()
     return directionFacing;
 }
 
-void SpatialAwareness::turnLeft() {}
+void SpatialAwareness::turnLeft()
+{
+    int directionFacingIndex = (int)directionFacing;
+    int smallerEnumIndex = directionFacingIndex - 1;
+    if (smallerEnumIndex < (int)Direction::min)
+    {
+        smallerEnumIndex = (int)Direction::max;
+    }
+    directionFacing = (Direction)smallerEnumIndex;
+}
 
-void SpatialAwareness::turnRight() {}
+void SpatialAwareness::turnRight() {
+    int directionFacingIndex = (int)directionFacing;
+    int smallerEnumIndex = directionFacingIndex + 1;
+    if (smallerEnumIndex > (int)Direction::max)
+    {
+        smallerEnumIndex = (int)Direction::min;
+    }
+    directionFacing = (Direction)smallerEnumIndex;
+}
 
-SpatialAwareness::SpatialAwareness(Direction directionFacing, Coordinates coordinates)
+SpatialAwareness::SpatialAwareness(
+    Direction directionFacing,
+    Coordinates coordinates,
+    std::map<Direction, Coordinates> coordinateChangeMoveForward,
+    std::map<Direction, Coordinates> coordinateChangeMoveBackward)
     :directionFacing(std::move(directionFacing)),
-    coordinates(std::move(coordinates))
+    coordinates(std::move(coordinates)),
+    coordinateChangeMoveForward(std::move(coordinateChangeMoveForward)),
+    coordinateChangeMoveBackward(std::move(coordinateChangeMoveBackward))
 {};

@@ -13,16 +13,20 @@ class TestFixtures
     private:
         int robotFromTop = 3;
         int robotFromLeft = 3;
-    public:
         Coordinates coordinates = { robotFromTop, robotFromLeft };
         Direction directionFacing = Direction::north;
+    public:
+        RobotConfig robotConfig = { coordinates, directionFacing };
 };
 
-/* 
 TEST_CASE("SpatialAwareness turns left")
 {
     TestFixtures fixtures = TestFixtures();
-    SpatialAwareness spatialAwareness = SpatialAwareness(std::move(fixtures.directionFacing), std::move(fixtures.coordinates));
+    SpatialAwareness spatialAwareness = SpatialAwareness(
+        std::move(fixtures.robotConfig.directionFacing),
+        std::move(fixtures.robotConfig.coordinates),
+        std::move(fixtures.robotConfig.coordinateChangeMoveForward),
+        std::move(fixtures.robotConfig.coordinateChangeMoveBackward));
 
     spatialAwareness.turnLeft();
     REQUIRE(spatialAwareness.getDirectionFacing() == Direction::west);
@@ -37,7 +41,11 @@ TEST_CASE("SpatialAwareness turns left")
 TEST_CASE("SpatialAwareness turns right")
 {
     TestFixtures fixtures = TestFixtures();
-    SpatialAwareness spatialAwareness = SpatialAwareness(std::move(fixtures.directionFacing), std::move(fixtures.coordinates));
+    SpatialAwareness spatialAwareness = SpatialAwareness(
+        std::move(fixtures.robotConfig.directionFacing),
+        std::move(fixtures.robotConfig.coordinates),
+        std::move(fixtures.robotConfig.coordinateChangeMoveForward),
+        std::move(fixtures.robotConfig.coordinateChangeMoveBackward));
 
     spatialAwareness.turnRight();
     REQUIRE(spatialAwareness.getDirectionFacing() == Direction::east);
@@ -49,12 +57,14 @@ TEST_CASE("SpatialAwareness turns right")
     REQUIRE(spatialAwareness.getDirectionFacing() == Direction::north);
 }
 
-*/
-
 bool TestSpatialAwarenessReturnsNextCoordinates(Movement movement, Direction directionFacing, Coordinates expectedNextCoordinates)
 {
     TestFixtures fixtures = TestFixtures();
-    SpatialAwareness spatialAwareness = SpatialAwareness(std::move(directionFacing), std::move(fixtures.coordinates));
+    SpatialAwareness spatialAwareness = SpatialAwareness(
+        std::move(directionFacing),
+        std::move(fixtures.robotConfig.coordinates),
+        std::move(fixtures.robotConfig.coordinateChangeMoveForward),
+        std::move(fixtures.robotConfig.coordinateChangeMoveBackward));
     Coordinates nextCoordinates = spatialAwareness.getNextCoordinates(movement);
 
     return expectedNextCoordinates.fromTop == nextCoordinates.fromTop &&

@@ -6,7 +6,9 @@ enum struct Direction
     north,
     east,
     south,
-    west
+    west,
+    min = north,
+    max = west
 };
 
 #endif

@@ -25,7 +25,11 @@ class TestFixtures
         };
     public:
         std::unique_ptr<IPlanet> planet = std::make_unique<Planet>(startupConfigs);
-        std::unique_ptr<ISpatialAwareness> spatialAwareness = std::make_unique<SpatialAwareness>(robotDirection, coordinates);
+        std::unique_ptr<ISpatialAwareness> spatialAwareness = std::make_unique<SpatialAwareness>(
+            robotDirection,
+            coordinates,
+            startupConfigs.robot.coordinateChangeMoveForward,
+            startupConfigs.robot.coordinateChangeMoveBackward);
 };
 
 TEST_CASE("Robot can receive valid instuctions")

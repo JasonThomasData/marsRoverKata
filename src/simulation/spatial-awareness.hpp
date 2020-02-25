@@ -1,4 +1,5 @@
 #include <string>
+#include <map>
 
 #include "i_spatial-awareness.hpp"
 #include "directions.hpp"
@@ -12,12 +13,18 @@ class SpatialAwareness : public ISpatialAwareness
 {
     public:
         SpatialAwareness();
-        SpatialAwareness(Direction directionFacing, Coordinates coordinates);
+        SpatialAwareness(
+            Direction directionFacing,
+            Coordinates coordinates,
+            std::map<Direction, Coordinates> coordinateChangeMoveForward,
+            std::map<Direction, Coordinates> coordinateChangeMoveBackward);
         Direction getDirectionFacing() override;
         Coordinates getNextCoordinates(Movement movement) override;
         void turnLeft() override;
         void turnRight() override;
     private:
+        std::map<Direction, Coordinates> coordinateChangeMoveForward;
+        std::map<Direction, Coordinates> coordinateChangeMoveBackward;
         Coordinates getNextCoordinatesChange(Movement movement);
         Coordinates applyChange(Coordinates coordinates, const Coordinates& changeInCoordinates);
         Direction directionFacing;
