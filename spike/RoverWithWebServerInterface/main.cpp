@@ -1,7 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 
-#include "../lib/civetweb_min/src/CivetServer.h"
+#include "../../lib/civetweb_min/src/CivetServer.h"
 
 class RequestHandler : public CivetHandler
 {
