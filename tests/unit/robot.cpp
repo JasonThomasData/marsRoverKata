@@ -30,22 +30,44 @@ class TestFixtures
             coordinates,
             startupConfigs.robot.coordinateChangeMoveForward,
             startupConfigs.robot.coordinateChangeMoveBackward);
+        std::map<const char, Movement> instructionsToMovements = {
+            { 'f', Movement::forward },
+            { 'b', Movement::backward },
+            { 'l', Movement::left },
+            { 'r', Movement::right }
+        };
 };
 
 TEST_CASE("Robot can receive valid instuctions")
 {
     TestFixtures fixtures = TestFixtures();
-    Robot robot = Robot(std::move(fixtures.planet), std::move(fixtures.spatialAwareness));
+    std::map<const char, Movement> instructionsToMovements = {
+        { 'f', Movement::forward },
+        { 'b', Movement::backward },
+        { 'l', Movement::left },
+        { 'r', Movement::right },
+    };
 
-    const std::string instructions = "flbr";
+    Robot robot = Robot(std::move(fixtures.planet),
+        std::move(fixtures.spatialAwareness),
+        std::move(instructionsToMovements));
 
-    REQUIRE_NOTHROW(robot.interpretInstructions(instructions));
+    REQUIRE_NOTHROW(robot.interpretInstructions("flbr"));
 }
 
 TEST_CASE("Robot rejects invalid instuctions")
 {
     TestFixtures fixtures = TestFixtures();
-    Robot robot = Robot(std::move(fixtures.planet), std::move(fixtures.spatialAwareness));
+    std::map<const char, Movement> instructionsToMovements = {
+        { 'f', Movement::forward },
+        { 'b', Movement::backward },
+        { 'l', Movement::left },
+        { 'r', Movement::right },
+    };
+
+    Robot robot = Robot(std::move(fixtures.planet),
+        std::move(fixtures.spatialAwareness),
+        std::move(instructionsToMovements));
 
     REQUIRE_THROWS_AS(robot.interpretInstructions(""), std::invalid_argument);
     REQUIRE_THROWS_AS(robot.interpretInstructions("fl.br"), std::invalid_argument);
@@ -55,13 +77,43 @@ TEST_CASE("Robot rejects invalid instuctions")
 TEST_CASE("Robot can understand instructions to translate to movements")
 {
     TestFixtures fixtures = TestFixtures();
-    Robot robot = Robot(std::move(fixtures.planet), std::move(fixtures.spatialAwareness));
+    std::map<const char, Movement> instructionsToMovements = {
+        { 'f', Movement::forward },
+        { 'b', Movement::backward },
+        { 'l', Movement::left },
+        { 'r', Movement::right },
+    };
 
-    const std::string instructions = "flbr";
-    std::vector<Movement> translatedMovements = robot.interpretInstructions(instructions);
+    Robot robot = Robot(std::move(fixtures.planet),
+        std::move(fixtures.spatialAwareness),
+        std::move(instructionsToMovements));
+
+    std::vector<Movement> translatedMovements = robot.interpretInstructions("flbr");
 
     REQUIRE(translatedMovements.at(0) == Movement::forward);
     REQUIRE(translatedMovements.at(1) == Movement::left);
     REQUIRE(translatedMovements.at(2) == Movement::backward);
     REQUIRE(translatedMovements.at(3) == Movement::right);
+}
+
+TEST_CASE("Robot requires map initialised in array notation style")
+{
+    TestFixtures fixtures = TestFixtures();
+
+    REQUIRE_THROWS_AS(
+        Robot(std::move(fixtures.planet),
+            std::move(fixtures.spatialAwareness),
+            std::move(fixtures.instructionsToMovements)),
+        std::invalid_argument);
+
+    std::map<const char, Movement> localInstructionsToMovements = {
+        { 'f', Movement::forward },
+        { 'b', Movement::backward },
+        { 'l', Movement::left },
+        { 'r', Movement::right }
+    };
+    REQUIRE_NOTHROW(
+        Robot(std::move(fixtures.planet),
+            std::move(fixtures.spatialAwareness),
+            std::move(localInstructionsToMovements)));
 }

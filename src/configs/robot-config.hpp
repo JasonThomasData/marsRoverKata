@@ -11,11 +11,11 @@ struct RobotConfig
 {
     Coordinates coordinates;
     Direction directionFacing;
-    std::map<std::string, Movement> instructionsToMovements = {
-        { "f", Movement::forward },
-        { "b", Movement::backward },
-        { "l", Movement::left },
-        { "r", Movement::right }
+    std::map<const char, Movement> instructionsToMovements = {
+        { 'f', Movement::forward },
+        { 'b', Movement::backward },
+        { 'l', Movement::left },
+        { 'r', Movement::right }
     };
     std::map<Direction, Coordinates> coordinateChangeMoveForward = {
         { Direction::north, { -1, 0 } },

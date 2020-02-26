@@ -1,4 +1,5 @@
 #include <sstream>
+#include <iostream>
 #include <vector>
 #include <stdexcept>
 #include "coordinates.hpp"
@@ -17,7 +18,7 @@ std::vector<Movement> Robot::interpretInstructions(const std::string& instructio
         throw std::invalid_argument(errorMessage.str());
     }
     std::vector<Movement> movements;
-    for(const char& instruction : instructions)
+    for(const char instruction : instructions)
     {
         Movement movement = getMovementInstruction(instruction);
         movements.push_back(movement);
@@ -26,38 +27,36 @@ std::vector<Movement> Robot::interpretInstructions(const std::string& instructio
 }
 
 
-Movement Robot::getMovementInstruction(const char& instruction)
+Movement Robot::getMovementInstruction(const char instruction)
 {
-    //TODO - could this be a map? This might mean information lives in fewer places"
-    if (instruction == 'f')
-    {
-        return Movement::forward;
-    }
-    else if (instruction == 'b')
-    {
-        return Movement::backward;
-    }
-    else if (instruction == 'l')
-    {
-        return Movement::left;
-    }
-    else if (instruction == 'r')
-    {
-        return Movement::right;
-    }
-    else
+    //if (instructionsToMovements.find(instruction) == instructionsToMovements.end()) 
+    if (instructionsToMovements.count(instruction) == 0) 
     {
         std::ostringstream errorMessage;
         errorMessage<< "The instruction \'"<< instruction<< "\' is not valid. \n Valid instructions are: "<< validInstructionsMessage;
         throw std::invalid_argument(errorMessage.str());
     }
+    else
+    {
+        return instructionsToMovements[instruction];
+    }
 }
 
-Robot::Robot(std::unique_ptr<IPlanet> planet, std::unique_ptr<ISpatialAwareness> spatialAwareness)
+Robot::Robot(std::unique_ptr<IPlanet> planet,
+    std::unique_ptr<ISpatialAwareness> spatialAwareness,
+    std::map<const char, Movement> _instructionsToMovements)
     :planet(std::move(planet)),
-    spatialAwareness(std::move(spatialAwareness))
+    spatialAwareness(std::move(spatialAwareness))//,
+    //instructionsToMovements(std::move(instructionsToMovements))
 {
     validInstructionsMessage = "f (forward), b (backward), l (left), r (right)";
+    instructionsToMovements = std::move(_instructionsToMovements); //Needs to be in constructor for following condition to work
+    if(instructionsToMovements.size() == 0)
+    {
+        std::ostringstream errorMessage;
+        errorMessage<< "The robot cannot use a blank map of instructions->Movements";
+        throw std::invalid_argument(errorMessage.str());
+    }
 }
 
 Robot::Robot(){};

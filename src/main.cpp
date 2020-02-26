@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
             std::move(configs.robot.coordinateChangeMoveForward),
             std::move(configs.robot.coordinateChangeMoveBackward)
         );
-        robot = Robot(std::move(mars), std::move(spatialAwareness));
+        robot = Robot(std::move(mars), std::move(spatialAwareness), std::move(configs.robot.instructionsToMovements));
     }
     catch(const std::exception& e)
     {
