@@ -1,6 +1,5 @@
 #include <vector>
 #include "../../lib/catch.hpp"
-
 #include "../../src/configs/planet-config.hpp"
 #include "../../src/configs/robot-config.hpp"
 #include "../../src/configs/startup-config.hpp"
