@@ -1,6 +1,6 @@
 
-src = build/io.o build/configs.o build/spatial-awareness.o build/planet.o build/robot.o
-testCases = build/io-unit-tests.o build/config-unit-tests.o build/spatial-unit-tests.o build/planet-unit-tests.o build/robot-unit-tests.o
+src = build/io.o build/configs.o build/message-interpreter.o build/spatial-awareness.o build/planet.o build/robot.o
+testCases = build/io-unit-tests.o build/config-unit-tests.o build/interpreter-unit-tests.o build/spatial-unit-tests.o build/planet-unit-tests.o build/robot-unit-tests.o
 tests = $(testCases) unit-tests-main unit-test-runner
 all: $(src) $(tests) main simulation
 
@@ -13,6 +13,9 @@ build/io.o: src/io.cpp
 
 build/configs.o: src/configs/startup-config.cpp
 	$(comp) $(C++FLAGS) -c src/configs/startup-config.cpp -o build/configs.o
+
+build/message-interpreter.o: src/robot/message-interpreter.cpp
+	$(comp) $(C++FLAGS) -c src/robot/message-interpreter.cpp -o build/message-interpreter.o
 
 build/spatial-awareness.o: src/robot/spatial-awareness.cpp
 	$(comp) $(C++FLAGS) -c src/robot/spatial-awareness.cpp -o build/spatial-awareness.o
@@ -28,6 +31,9 @@ build/io-unit-tests.o: tests/unit/io.cpp
 
 build/config-unit-tests.o: tests/unit/startup-config.cpp
 	$(comp) $(C++FLAGS) -Wno-writable-strings -c tests/unit/startup-config.cpp -o build/config-unit-tests.o
+
+build/interpreter-unit-tests.o: tests/unit/message-interpreter.cpp
+	$(comp) $(C++FLAGS) -Wno-writable-strings -c tests/unit/message-interpreter.cpp -o build/interpreter-unit-tests.o
 
 build/spatial-unit-tests.o: tests/unit/spatial-awareness.cpp
 	$(comp) $(C++FLAGS) -Wno-writable-strings -c tests/unit/spatial-awareness.cpp -o build/spatial-unit-tests.o

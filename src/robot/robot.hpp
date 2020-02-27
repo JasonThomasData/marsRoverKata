@@ -19,7 +19,6 @@ class Robot
         std::vector<Movement> interpretInstructions(const std::string& instructions);
     private:
         std::map<const char, Movement> instructionsToMovements;
-        std::string validInstructionsMessage;
         std::unique_ptr<IPlanet> planet;
         std::unique_ptr<ISpatialAwareness> spatialAwareness;
         Movement getMovementInstruction(const char instruction);

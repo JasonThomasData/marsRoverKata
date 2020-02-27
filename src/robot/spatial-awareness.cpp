@@ -11,6 +11,7 @@
 Coordinates SpatialAwareness::getNextCoordinates(Movement movement)
 {
     Coordinates changeInCoordinates = getNextCoordinatesChange(movement);
+    std::cout<< "Top: "<< changeInCoordinates.fromTop<< " Left: "<< changeInCoordinates.fromLeft<< std::endl;
     return applyChange(coordinates, changeInCoordinates);
 }
 
@@ -23,6 +24,7 @@ Coordinates SpatialAwareness::applyChange(Coordinates coordinates, const Coordin
 
 Coordinates SpatialAwareness::getNextCoordinatesChange(Movement movement)
 {
+    std::cout<< "Movement: "<< movement << std::endl;
     if (movement == Movement::forward)
     {
         return coordinateChangeMoveForward[directionFacing];
