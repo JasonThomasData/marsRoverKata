@@ -10,63 +10,40 @@
 #include "../../src/planet/planet.hpp"
 #include "../../src/coordinates.hpp"
 
-struct TestFixtures 
+SCENARIO( "MessageInterpreter can receives instructions" )
 {
-    std::map<const char, Movement> instructionsToMovements = {
-        { 'f', Movement::forward },
-        { 'b', Movement::backward },
-        { 'l', Movement::left },
-        { 'r', Movement::right }
-    };
-};
+    GIVEN( "Instructions mapped to movements" )
+    {
+        std::map<const char, Movement> instructionsToMovements = {
+            { 'f', Movement::forward },
+            { 'b', Movement::backward },
+            { 'l', Movement::left },
+            { 'r', Movement::right }
+        };
+        MessageInterpreter messageInterpreter = MessageInterpreter(std::move(instructionsToMovements));
 
-TEST_CASE("Message interpreter can receive valid instuctions")
-{
-    TestFixtures fixtures = TestFixtures();
-    MessageInterpreter messageInterpreter = MessageInterpreter(std::move(fixtures.instructionsToMovements));
+        THEN( "can receive valid instructions" )
+        {
+            REQUIRE_NOTHROW(messageInterpreter.interpretInstructions("flbr"));
+        }
 
-    REQUIRE_NOTHROW(messageInterpreter.interpretInstructions("flbr"));
-}
+        THEN( "can reject invalid instructions" )
+        {
+            REQUIRE_THROWS_AS(messageInterpreter.interpretInstructions(""), std::invalid_argument);
+            REQUIRE_THROWS_AS(messageInterpreter.interpretInstructions("fl.br"), std::invalid_argument);
+            REQUIRE_THROWS_AS(messageInterpreter.interpretInstructions("1flbr"), std::invalid_argument);
+        }
 
-TEST_CASE("Message interpreter rejects invalid instuctions")
-{
-    TestFixtures fixtures = TestFixtures();
-    MessageInterpreter messageInterpreter = MessageInterpreter(std::move(fixtures.instructionsToMovements));
-
-    REQUIRE_THROWS_AS(messageInterpreter.interpretInstructions(""), std::invalid_argument);
-    REQUIRE_THROWS_AS(messageInterpreter.interpretInstructions("fl.br"), std::invalid_argument);
-    REQUIRE_THROWS_AS(messageInterpreter.interpretInstructions("1flbr"), std::invalid_argument);
-}
-
-TEST_CASE("Message interpreter can understand instructions to translate to movements")
-{
-    TestFixtures fixtures = TestFixtures();
-    MessageInterpreter messageInterpreter = MessageInterpreter(std::move(fixtures.instructionsToMovements));
-
-    std::vector<Movement> translatedMovements = messageInterpreter.interpretInstructions("flbr");
-
-    REQUIRE(translatedMovements.at(0) == Movement::forward);
-    REQUIRE(translatedMovements.at(1) == Movement::left);
-    REQUIRE(translatedMovements.at(2) == Movement::backward);
-    REQUIRE(translatedMovements.at(3) == Movement::right);
-}
-
-TEST_CASE("Message interpreter requires map initialised not in a struct")
-{
-    TestFixtures fixtures = TestFixtures();
-    MessageInterpreter messageInterpreter = MessageInterpreter(std::move(fixtures.instructionsToMovements));
-
-    //Seems to be a bug with Catch, 
-    REQUIRE_THROWS_AS(
-        MessageInterpreter(std::move(fixtures.instructionsToMovements)),
-        std::invalid_argument);
-
-    std::map<const char, Movement> instructionsToMovements = {
-        { 'f', Movement::forward },
-        { 'b', Movement::backward },
-        { 'l', Movement::left },
-        { 'r', Movement::right }
-    };
-    REQUIRE_NOTHROW(
-        MessageInterpreter(std::move(instructionsToMovements)));
+        WHEN( "receives valid instructions" )
+        {
+            std::vector<Movement> translatedMovements = messageInterpreter.interpretInstructions("flbr");
+            THEN( "an appropriate vector of movements is received" )
+            {
+                REQUIRE(translatedMovements.at(0) == Movement::forward);
+                REQUIRE(translatedMovements.at(1) == Movement::left);
+                REQUIRE(translatedMovements.at(2) == Movement::backward);
+                REQUIRE(translatedMovements.at(3) == Movement::right);
+            }
+        }
+    }
 }

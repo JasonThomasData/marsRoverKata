@@ -9,6 +9,7 @@
 #include "../../src/planet/planet.hpp"
 #include "../../src/coordinates.hpp"
 
+/*
 class TestFixtures 
 {
     private:
@@ -37,4 +38,4 @@ class TestFixtures
             { 'r', Movement::right }
         };
 };
-
+*/
