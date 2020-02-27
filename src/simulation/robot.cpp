@@ -44,14 +44,13 @@ Movement Robot::getMovementInstruction(const char instruction)
 
 Robot::Robot(std::unique_ptr<IPlanet> planet,
     std::unique_ptr<ISpatialAwareness> spatialAwareness,
-    std::map<const char, Movement> _instructionsToMovements)
-    :planet(std::move(planet)),
-    spatialAwareness(std::move(spatialAwareness))//,
-    //instructionsToMovements(std::move(instructionsToMovements))
+    std::map<const char, Movement> instructionsToMovements)
+    :instructionsToMovements(std::move(instructionsToMovements)),
+    planet(std::move(planet)),
+    spatialAwareness(std::move(spatialAwareness))
 {
     validInstructionsMessage = "f (forward), b (backward), l (left), r (right)";
-    instructionsToMovements = std::move(_instructionsToMovements); //Needs to be in constructor for following condition to work
-    if(instructionsToMovements.size() == 0)
+    if(this->instructionsToMovements.empty())
     {
         std::ostringstream errorMessage;
         errorMessage<< "The robot cannot use a blank map of instructions->Movements";

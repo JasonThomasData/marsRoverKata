@@ -96,17 +96,18 @@ TEST_CASE("Robot can understand instructions to translate to movements")
     REQUIRE(translatedMovements.at(3) == Movement::right);
 }
 
-TEST_CASE("Robot requires map initialised in array notation style")
+TEST_CASE("Robot requires map initialised not in a struct")
 {
     TestFixtures fixtures = TestFixtures();
 
+    //Seems to be a bug with Catch, 
     REQUIRE_THROWS_AS(
         Robot(std::move(fixtures.planet),
             std::move(fixtures.spatialAwareness),
             std::move(fixtures.instructionsToMovements)),
         std::invalid_argument);
 
-    std::map<const char, Movement> localInstructionsToMovements = {
+    std::map<const char, Movement> instructionsToMovements = {
         { 'f', Movement::forward },
         { 'b', Movement::backward },
         { 'l', Movement::left },
@@ -115,5 +116,5 @@ TEST_CASE("Robot requires map initialised in array notation style")
     REQUIRE_NOTHROW(
         Robot(std::move(fixtures.planet),
             std::move(fixtures.spatialAwareness),
-            std::move(localInstructionsToMovements)));
+            std::move(instructionsToMovements)));
 }
