@@ -2,7 +2,7 @@
 
 #include "../simulation/coordinates.hpp"
 #include "../simulation/directions.hpp"
-#include "../simulation/movements.hpp"
+#include "../simulation/robot/movements.hpp"
 
 #ifndef RobotConfig_hpp
 #define RobotConfig_hpp

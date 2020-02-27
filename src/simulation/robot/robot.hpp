@@ -1,10 +1,10 @@
 #include <vector>
-#include "coordinates.hpp"
-#include "directions.hpp"
+#include "../../configs/robot-config.hpp"
+#include "../coordinates.hpp"
+#include "../directions.hpp"
+#include "../planet/i_planet.hpp"
 #include "movements.hpp"
-#include "i_planet.hpp"
 #include "i_spatial-awareness.hpp"
-#include "../configs/robot-config.hpp"
 
 #ifndef Robot_h 
 #define Robot_h

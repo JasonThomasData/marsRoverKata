@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include "planet.hpp"
 #include "surface-square.hpp"
-#include "../configs/planet-config.hpp"
+#include "../../configs/planet-config.hpp"
 
 void Planet::createSurface(const PlanetConfig& planetConfig)
 {

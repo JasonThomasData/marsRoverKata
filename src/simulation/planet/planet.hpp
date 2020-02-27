@@ -1,7 +1,7 @@
 #include <vector>
-#include "../configs/planet-config.hpp"
-#include "../configs/startup-config.hpp"
-#include "coordinates.hpp"
+#include "../../configs/planet-config.hpp"
+#include "../../configs/startup-config.hpp"
+#include "../coordinates.hpp"
 #include "surface-square.hpp"
 #include "i_planet.hpp"
 

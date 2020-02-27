@@ -3,10 +3,10 @@
 #include "../../lib/catch.hpp"
 #include "../../src/configs/startup-config.hpp"
 #include "../../src/simulation/directions.hpp"
-#include "../../src/simulation/robot.hpp"
-#include "../../src/simulation/i_planet.hpp"
-#include "../../src/simulation/planet.hpp"
-#include "../../src/simulation/spatial-awareness.hpp"
+#include "../../src/simulation/robot/robot.hpp"
+#include "../../src/simulation/robot/spatial-awareness.hpp"
+#include "../../src/simulation/planet/i_planet.hpp"
+#include "../../src/simulation/planet/planet.hpp"
 #include "../../src/simulation/coordinates.hpp"
 
 class TestFixtures 

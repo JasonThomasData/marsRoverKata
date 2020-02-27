@@ -1,7 +1,7 @@
 #include <vector>
 #include "../../lib/catch.hpp"
 #include "../../src/configs/startup-config.hpp"
-#include "../../src/simulation/planet.hpp"
+#include "../../src/simulation/planet/planet.hpp"
 #include "../../src/simulation/coordinates.hpp"
 #include "../../src/simulation/directions.hpp"
 

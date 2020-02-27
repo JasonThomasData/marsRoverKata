@@ -1,4 +1,4 @@
-#include "coordinates.hpp"
+#include "../coordinates.hpp"
 
 #ifndef IPlanet_h 
 #define IPlanet_h

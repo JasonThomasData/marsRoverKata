@@ -2,12 +2,12 @@
 #include <iostream>
 #include <vector>
 #include <stdexcept>
-#include "coordinates.hpp"
-#include "directions.hpp"
+#include "../coordinates.hpp"
+#include "../directions.hpp"
+#include "../planet/i_planet.hpp"
+#include "../../configs/robot-config.hpp"
 #include "movements.hpp"
-#include "i_planet.hpp"
 #include "robot.hpp"
-#include "../configs/robot-config.hpp"
 
 std::vector<Movement> Robot::interpretInstructions(const std::string& instructions)
 {

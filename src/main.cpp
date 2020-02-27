@@ -1,9 +1,9 @@
 #include <iostream>
 #include "configs/startup-config.hpp"
 #include "io.hpp"
-#include "simulation/planet.hpp"
-#include "simulation/robot.hpp"
-#include "simulation/spatial-awareness.hpp"
+#include "simulation/planet/planet.hpp"
+#include "simulation/robot/robot.hpp"
+#include "simulation/robot/spatial-awareness.hpp"
 
 int main(int argc, char *argv[])
 {

@@ -1,10 +1,9 @@
 #include <string>
 #include <map>
-
 #include "i_spatial-awareness.hpp"
-#include "directions.hpp"
+#include "../directions.hpp"
+#include "../coordinates.hpp"
 #include "movements.hpp"
-#include "coordinates.hpp"
 
 #ifndef SpatialAwareness_h 
 #define SpatialAwareness_h

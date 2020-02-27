@@ -1,6 +1,6 @@
-#include "coordinates.hpp"
+#include "../coordinates.hpp"
 #include "movements.hpp"
-#include "directions.hpp"
+#include "../directions.hpp"
 
 #ifndef ISpatialAwareness_h 
 #define ISpatialAwareness_h

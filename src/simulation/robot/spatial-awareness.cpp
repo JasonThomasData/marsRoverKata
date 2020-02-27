@@ -3,10 +3,10 @@
 #include <sstream>
 #include <string>
 #include <iostream>
+#include "../directions.hpp"
+#include "../coordinates.hpp"
 #include "spatial-awareness.hpp"
 #include "movements.hpp"
-#include "directions.hpp"
-#include "coordinates.hpp"
 
 Coordinates SpatialAwareness::getNextCoordinates(Movement movement)
 {
