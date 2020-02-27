@@ -2,10 +2,10 @@
 #include <iostream>
 #include <vector>
 #include <stdexcept>
+#include "../configs/robot-config.hpp"
+#include "../planet/i_planet.hpp"
 #include "../coordinates.hpp"
 #include "../directions.hpp"
-#include "../planet/i_planet.hpp"
-#include "../../configs/robot-config.hpp"
 #include "movements.hpp"
 #include "robot.hpp"
 

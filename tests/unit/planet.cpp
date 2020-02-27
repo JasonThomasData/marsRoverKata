@@ -1,9 +1,9 @@
 #include <vector>
 #include "../../lib/catch.hpp"
 #include "../../src/configs/startup-config.hpp"
-#include "../../src/simulation/planet/planet.hpp"
-#include "../../src/simulation/coordinates.hpp"
-#include "../../src/simulation/directions.hpp"
+#include "../../src/planet/planet.hpp"
+#include "../../src/coordinates.hpp"
+#include "../../src/directions.hpp"
 
 TEST_CASE("Planet constructs successfully")
 {

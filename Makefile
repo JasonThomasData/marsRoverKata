@@ -14,14 +14,14 @@ build/io.o: src/io.cpp
 build/configs.o: src/configs/startup-config.cpp
 	$(comp) $(C++FLAGS) -c src/configs/startup-config.cpp -o build/configs.o
 
-build/spatial-awareness.o: src/simulation/spatial-awareness.cpp
-	$(comp) $(C++FLAGS) -c src/simulation/spatial-awareness.cpp -o build/spatial-awareness.o
+build/spatial-awareness.o: src/robot/spatial-awareness.cpp
+	$(comp) $(C++FLAGS) -c src/robot/spatial-awareness.cpp -o build/spatial-awareness.o
 
-build/planet.o: src/simulation/planet.cpp
-	$(comp) $(C++FLAGS) -c src/simulation/planet.cpp -o build/planet.o
+build/planet.o: src/planet/planet.cpp
+	$(comp) $(C++FLAGS) -c src/planet/planet.cpp -o build/planet.o
 
-build/robot.o: src/simulation/robot.cpp
-	$(comp) $(C++FLAGS) -c src/simulation/robot.cpp -o build/robot.o
+build/robot.o: src/robot/robot.cpp
+	$(comp) $(C++FLAGS) -c src/robot/robot.cpp -o build/robot.o
 
 build/io-unit-tests.o: tests/unit/io.cpp
 	$(comp) $(C++FLAGS) -Wno-writable-strings -c tests/unit/io.cpp -o build/io-unit-tests.o

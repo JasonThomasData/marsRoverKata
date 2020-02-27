@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 #include "io.hpp"
-#include "simulation/directions.hpp"
+#include "directions.hpp"
 
 void IO::displayInitialisationUsage()
 {

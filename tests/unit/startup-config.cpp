@@ -4,8 +4,8 @@
 #include "../../src/configs/planet-config.hpp"
 #include "../../src/configs/robot-config.hpp"
 #include "../../src/configs/startup-config.hpp"
-#include "../../src/simulation/coordinates.hpp"
-#include "../../src/simulation/directions.hpp"
+#include "../../src/coordinates.hpp"
+#include "../../src/directions.hpp"
 
 TEST_CASE("Configs constructed successfully")
 {

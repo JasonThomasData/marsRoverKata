@@ -1,7 +1,7 @@
 #include <string>
 
 #include "configs/startup-config.hpp"
-#include "simulation/directions.hpp"
+#include "directions.hpp"
 
 
 namespace IO

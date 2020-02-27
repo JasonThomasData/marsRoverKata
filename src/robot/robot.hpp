@@ -1,5 +1,5 @@
 #include <vector>
-#include "../../configs/robot-config.hpp"
+#include "../configs/robot-config.hpp"
 #include "../coordinates.hpp"
 #include "../directions.hpp"
 #include "../planet/i_planet.hpp"
