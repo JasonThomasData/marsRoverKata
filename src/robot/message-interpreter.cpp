@@ -3,8 +3,19 @@
 #include <sstream>
 #include <string>
 #include <map>
+#include "../directions.hpp"
 #include "movements.hpp"
 #include "message-interpreter.hpp"
+
+std::string MessageInterpreter::getReadableInstruction(const Movement& movement)
+{
+    return movementsToReadableInstructions[movement];
+}
+
+std::string MessageInterpreter::getReadableDirection(const Direction& direction)
+{
+    return directionToReadableDirection[direction];
+}
 
 std::vector<Movement> MessageInterpreter::interpretInstructions(const std::string& instructions)
 {
@@ -37,16 +48,32 @@ Movement MessageInterpreter::getMovementInstruction(const char instruction)
     }
 }
 
-MessageInterpreter::MessageInterpreter(std::map<const char, Movement> instructionsToMovements)
-:instructionsToMovements(std::move(instructionsToMovements))
+MessageInterpreter::MessageInterpreter(std::map<const char, Movement> instructionsToMovements,
+    std::map<Movement, const std::string> movementsToReadableInstructions,
+    std::map<Direction, const std::string> directionToReadableDirection)
+    :instructionsToMovements(std::move(instructionsToMovements)),
+    movementsToReadableInstructions(std::move(movementsToReadableInstructions)),
+    directionToReadableDirection(std::move(directionToReadableDirection))
 {
-    validInstructionsMessage = "f (forward), b (backward), l (left), r (right)";
     if(this->instructionsToMovements.empty())
     {
         std::ostringstream errorMessage;
         errorMessage<< "The robot cannot use a blank map of instructions->Movements";
         throw std::invalid_argument(errorMessage.str());
     }
+    if(this->movementsToReadableInstructions.empty())
+    {
+        std::ostringstream errorMessage;
+        errorMessage<< "The robot cannot use a blank map of movements->ReadableInstructions";
+        throw std::invalid_argument(errorMessage.str());
+    }
+    if(this->directionToReadableDirection.empty())
+    {
+        std::ostringstream errorMessage;
+        errorMessage<< "The robot cannot use a blank map of directions->ReadableDirections";
+        throw std::invalid_argument(errorMessage.str());
+    }
+    validInstructionsMessage = "f (forward), b (backward), l (left), r (right)";
 }
 
 MessageInterpreter::MessageInterpreter(){}
