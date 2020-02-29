@@ -10,18 +10,23 @@
 
 Coordinates SpatialAwareness::getNextCoordinates(Movement movement)
 {
-    Coordinates changeInCoordinates = getNextCoordinatesChange(movement);
-    return applyChange(coordinates, changeInCoordinates);
+    Coordinates coordinatesDifference = getCoordinatesDifference(movement);
+    return getChangedCoordinates(coordinates, coordinatesDifference);
 }
 
-Coordinates SpatialAwareness::applyChange(Coordinates coordinates, const Coordinates& changeInCoordinates)
+void SpatialAwareness::updateCoordinates(Coordinates newCoordinates)
+{
+    coordinates = newCoordinates;
+}
+
+Coordinates SpatialAwareness::getChangedCoordinates(Coordinates coordinates, const Coordinates& changeInCoordinates)
 {
     coordinates.fromTop += changeInCoordinates.fromTop;
     coordinates.fromLeft += changeInCoordinates.fromLeft;
     return coordinates;
 }
 
-Coordinates SpatialAwareness::getNextCoordinatesChange(Movement movement)
+Coordinates SpatialAwareness::getCoordinatesDifference(Movement movement)
 {
     if (movement == Movement::forward)
     {

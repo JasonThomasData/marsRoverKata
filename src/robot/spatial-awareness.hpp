@@ -19,13 +19,14 @@ class SpatialAwareness : public ISpatialAwareness
             std::map<Direction, Coordinates> coordinateChangeMoveBackward);
         Direction getDirectionFacing() override;
         Coordinates getNextCoordinates(Movement movement) override;
+        void updateCoordinates(Coordinates newCoordinates) override;
         void turnLeft() override;
         void turnRight() override;
     private:
         std::map<Direction, Coordinates> coordinateChangeMoveForward;
         std::map<Direction, Coordinates> coordinateChangeMoveBackward;
-        Coordinates getNextCoordinatesChange(Movement movement);
-        Coordinates applyChange(Coordinates coordinates, const Coordinates& changeInCoordinates);
+        Coordinates getCoordinatesDifference(Movement movement);
+        Coordinates getChangedCoordinates(Coordinates coordinates, const Coordinates& changeInCoordinates);
         Direction directionFacing;
         Coordinates coordinates;
 };

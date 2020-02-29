@@ -5,31 +5,88 @@
 #include "../../src/coordinates.hpp"
 #include "../../src/directions.hpp"
 
-TEST_CASE("Planet constructs successfully")
+SCENARIO ("Planet ***")
 {
-    //Arrange
-    int surfaceWidth = 2;
-    int surfaceHeight = 2;
-    int obstacleNumber = 3;
-    int robotFromTop = 1;
-    int robotFromLeft = 1;
-    Direction robotDirection = Direction::west;
+    GIVEN ("Planet has valid attributes")
+    {
+        int surfaceWidth = 2;
+        int surfaceHeight = 2;
+        int obstacleNumber = 3;
+        int robotFromTop = 1;
+        int robotFromLeft = 1;
+        Direction robotDirection = Direction::west;
 
-    StartupConfigs startupConfigs = {
-        { surfaceWidth, surfaceHeight, obstacleNumber },
-        { { robotFromTop, robotFromLeft } , robotDirection }
-    };
+        StartupConfigs startupConfigs = {
+            { surfaceWidth, surfaceHeight, obstacleNumber },
+            { { robotFromTop, robotFromLeft } , robotDirection }
+        };
 
-    //Act
-    Planet planet = Planet(startupConfigs);
+        std::vector<std::vector<SurfaceSquare>> surface; //Tests not need this
+        Planet planet = Planet(std::move(surface), startupConfigs.planet);
 
-    //Assert
-    Coordinates obstacleLocation1 = {0, 0};
-    Coordinates obstacleLocation2 = {0, 1};
-    Coordinates obstacleLocation3 = {1, 0};
+        WHEN("Coordinates north of north boundary")
+        {
+            Coordinates outOfBoundsCoordinates = { -1, 0 };
+            Coordinates adjustedCoordinates = planet.adjustCoordinatesForSurfaceBoundaries(outOfBoundsCoordinates);
 
-    REQUIRE(planet.isObstacleAtCoordinate(obstacleLocation1) == true);
-    REQUIRE(planet.isObstacleAtCoordinate(obstacleLocation2) == true);
-    REQUIRE(planet.isObstacleAtCoordinate(obstacleLocation3) == true);
-    REQUIRE(planet.isObstacleAtCoordinate(startupConfigs.robot.coordinates) == false);
+            THEN("Coordinates adjusted to opposite boundary")
+            {
+                Coordinates expectedAdjustedBoundary = { 1 , 0 };
+                REQUIRE(adjustedCoordinates.fromTop == expectedAdjustedBoundary.fromTop);
+                REQUIRE(adjustedCoordinates.fromLeft == expectedAdjustedBoundary.fromLeft);
+            }
+        }
+
+        WHEN("Coordinates east of east boundary")
+        {
+            Coordinates outOfBoundsCoordinates = { 0, 2 };
+            Coordinates adjustedCoordinates = planet.adjustCoordinatesForSurfaceBoundaries(outOfBoundsCoordinates);
+
+            THEN("Coordinates adjusted to opposite boundary")
+            {
+                Coordinates expectedAdjustedBoundary = { 0 , 0 };
+                REQUIRE(adjustedCoordinates.fromTop == expectedAdjustedBoundary.fromTop);
+                REQUIRE(adjustedCoordinates.fromLeft == expectedAdjustedBoundary.fromLeft);
+            }
+        }
+
+        WHEN("Coordinates south of south boundary")
+        {
+            Coordinates outOfBoundsCoordinates = { 2, 0 };
+            Coordinates adjustedCoordinates = planet.adjustCoordinatesForSurfaceBoundaries(outOfBoundsCoordinates);
+
+            THEN("Coordinates adjusted to opposite boundary")
+            {
+                Coordinates expectedAdjustedBoundary = { 0 , 0 };
+                REQUIRE(adjustedCoordinates.fromTop == expectedAdjustedBoundary.fromTop);
+                REQUIRE(adjustedCoordinates.fromLeft == expectedAdjustedBoundary.fromLeft);
+            }
+        }
+
+        WHEN("Coordinates west of west boundary")
+        {
+            Coordinates outOfBoundsCoordinates = { 0, -1 };
+            Coordinates adjustedCoordinates = planet.adjustCoordinatesForSurfaceBoundaries(outOfBoundsCoordinates);
+
+            THEN("Coordinates adjusted to opposite boundary")
+            {
+                Coordinates expectedAdjustedBoundary = { 0 , 1 };
+                REQUIRE(adjustedCoordinates.fromTop == expectedAdjustedBoundary.fromTop);
+                REQUIRE(adjustedCoordinates.fromLeft == expectedAdjustedBoundary.fromLeft);
+            }
+        }
+
+        WHEN("Coordinates within bounaries")
+        {
+            Coordinates outOfBoundsCoordinates = { 0 , 1 };
+            Coordinates notAdjustedCoordinates = planet.adjustCoordinatesForSurfaceBoundaries(outOfBoundsCoordinates);
+
+            THEN("Coordinates not adjusted")
+            {
+                Coordinates expectedAdjustedBoundary = { 0 , 1 };
+                REQUIRE(notAdjustedCoordinates.fromTop == expectedAdjustedBoundary.fromTop);
+                REQUIRE(notAdjustedCoordinates.fromLeft == expectedAdjustedBoundary.fromLeft);
+            }
+        }
+    }
 }
