@@ -4,47 +4,44 @@
 #include "surface-square.hpp"
 #include "../configs/planet-config.hpp"
 
-void Planet::createSurface(const PlanetConfig& planetConfig)
+Coordinates Planet::adjustCoordinatesForSurfaceBoundaries(const Coordinates& coordinates)
 {
-    for(int i = 0; i < planetConfig.surfaceHeight; i++)
+    Coordinates adjustedCoordinates;
+    if(coordinates.fromTop < surfaceNorthBoundary)
     {
-        std::vector<SurfaceSquare> sliceOfSurfaceSpanningWidthOfPlanet;
-        for(int j = 0; j < planetConfig.surfaceWidth; j++)
-        {
-            sliceOfSurfaceSpanningWidthOfPlanet.push_back(SurfaceSquare::null);
-        }
-        surface.push_back(sliceOfSurfaceSpanningWidthOfPlanet);
+        adjustedCoordinates = { surfaceSouthBoundary, coordinates.fromLeft };
     }
-};
-
-void Planet::createObstacles(const StartupConfigs& startupConfig)
-{
-    int numberOfObstacles = 0;
-    while(numberOfObstacles < startupConfig.planet.obstacleNumber)
+    else if(coordinates.fromTop > surfaceSouthBoundary)
     {
-        Coordinates obstacleCoordinates;
-        obstacleCoordinates.fromTop = rand() % startupConfig.planet.surfaceHeight;
-        obstacleCoordinates.fromLeft = rand() % startupConfig.planet.surfaceWidth;
-        //TODO - Replace loop with a randomised list, pop off end (gauranteed to halt in n loops)
-        if(surface[obstacleCoordinates.fromTop][obstacleCoordinates.fromLeft] != SurfaceSquare::obstacle
-            && !obstacleCoordinates.isSame(startupConfig.robot.coordinates))
-        {
-            surface[obstacleCoordinates.fromTop][obstacleCoordinates.fromLeft] = SurfaceSquare::obstacle;
-            numberOfObstacles++;
-        }
+        adjustedCoordinates = { surfaceNorthBoundary, coordinates.fromLeft };
     }
-};
+    else if(coordinates.fromLeft > surfaceEastBoundary)
+    {
+        adjustedCoordinates = { coordinates.fromTop, surfaceWestBoundary };
+    }
+    else if(coordinates.fromLeft < surfaceWestBoundary)
+    {
+        adjustedCoordinates = { coordinates.fromTop, surfaceEastBoundary };
+    }
+    else
+    {
+        adjustedCoordinates = { coordinates.fromTop, coordinates.fromLeft };
+    }
+    return adjustedCoordinates;
+}
 
 bool Planet::isObstacleAtCoordinate(const Coordinates& coordinates)
 {
     return surface[coordinates.fromTop][coordinates.fromLeft] == SurfaceSquare::obstacle;
 }
 
-Planet::Planet(const StartupConfigs& startupConfig)
+Planet::Planet(std::vector<std::vector<SurfaceSquare>> surface, const PlanetConfig& planetConfig)
+    :surface(std::move(surface))
 {
-    //TODO - Is there a way to make the surface immutable? Maybe std::move it in as a dependency
-    createSurface(startupConfig.planet);
-    createObstacles(startupConfig);
+    surfaceNorthBoundary = 0;
+    surfaceEastBoundary = planetConfig.surfaceWidth - 1; 
+    surfaceSouthBoundary = planetConfig.surfaceHeight - 1; 
+    surfaceWestBoundary = 0;
 }
 
 Planet::Planet(){};

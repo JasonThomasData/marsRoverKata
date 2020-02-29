@@ -1,6 +1,5 @@
 #include <vector>
 #include "../configs/planet-config.hpp"
-#include "../configs/startup-config.hpp"
 #include "../coordinates.hpp"
 #include "surface-square.hpp"
 #include "i_planet.hpp"
@@ -12,12 +11,15 @@ class Planet: public IPlanet
 {
     public:
         Planet();
-        Planet(const StartupConfigs& startupConfig);
+        Planet(std::vector<std::vector<SurfaceSquare>> surface, const PlanetConfig& planetConfig);
         bool isObstacleAtCoordinate(const Coordinates& coordinates) override;
+        Coordinates adjustCoordinatesForSurfaceBoundaries(const Coordinates& coordinates) override;
     private:
+        int surfaceNorthBoundary;
+        int surfaceEastBoundary;
+        int surfaceSouthBoundary;
+        int surfaceWestBoundary;
         std::vector< std::vector<SurfaceSquare> > surface;
-        void createSurface(const PlanetConfig& planetConfig);
-        void createObstacles(const StartupConfigs& startupConfig);
 };
 
 #endif
