@@ -48,9 +48,9 @@ Movement MessageInterpreter::getMovementInstruction(const char instruction)
     }
 }
 
-MessageInterpreter::MessageInterpreter(std::map<const char, Movement> instructionsToMovements,
-    std::map<Movement, const std::string> movementsToReadableInstructions,
-    std::map<Direction, const std::string> directionToReadableDirection)
+MessageInterpreter::MessageInterpreter(const std::map<const char, Movement> instructionsToMovements,
+    const std::map<const Movement, std::string> movementsToReadableInstructions,
+    const std::map<const Direction, std::string> directionToReadableDirection)
     :instructionsToMovements(std::move(instructionsToMovements)),
     movementsToReadableInstructions(std::move(movementsToReadableInstructions)),
     directionToReadableDirection(std::move(directionToReadableDirection))

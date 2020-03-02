@@ -11,14 +11,14 @@
 #include "movements.hpp"
 #include "robot.hpp"
 
-std::string Robot::getMovementInstructionResult(Movement movement)
+std::string Robot::getMovementInstructionResult(const Movement& movement)
 {
     std::ostringstream result;
     result<< "Received instruction to move { "<< messageInterpreter->getReadableInstruction(movement)<< " }"<< std::endl;
     return result.str();
 }
 
-std::string Robot::getCollisionResult(Coordinates occupiedCoordinates)
+std::string Robot::getCollisionResult(const Coordinates& occupiedCoordinates)
 {
     std::ostringstream result;
     result<< "Hit obstacle at { fromTop: "<< occupiedCoordinates.fromTop<< ", fromLeft: "<< occupiedCoordinates.fromLeft<< " }"<< std::endl;
@@ -26,14 +26,14 @@ std::string Robot::getCollisionResult(Coordinates occupiedCoordinates)
     return result.str();
 }
 
-std::string Robot::getNewCoordinatesResult(Coordinates newCoordinates)
+std::string Robot::getNewCoordinatesResult(const Coordinates& newCoordinates)
 {
     std::ostringstream result;
     result<< "Moved to { fromTop: "<< newCoordinates.fromTop<< ", fromLeft: "<< newCoordinates.fromLeft<< " }"<< std::endl;
     return result.str();
 }
 
-std::string Robot::getTurnResult(Movement movement)
+std::string Robot::getTurnResult(const Movement& movement)
 {
     std::ostringstream result;
     Direction directionFacing = spatialAwareness->getDirectionFacing();

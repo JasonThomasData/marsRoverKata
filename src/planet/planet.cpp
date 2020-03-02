@@ -35,7 +35,7 @@ bool Planet::isObstacleAtCoordinate(const Coordinates& coordinates)
     return surface[coordinates.fromTop][coordinates.fromLeft] == SurfaceSquare::obstacle;
 }
 
-Planet::Planet(std::vector<std::vector<SurfaceSquare>> surface, const PlanetConfig& planetConfig)
+Planet::Planet(const std::vector<std::vector<SurfaceSquare>> surface, const PlanetConfig& planetConfig)
     :surface(std::move(surface))
 {
     surfaceNorthBoundary = 0;

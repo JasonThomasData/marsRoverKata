@@ -1,7 +1,7 @@
 #ifndef SurfaceSquare_h 
 #define SurfaceSquare_h
 
-enum struct SurfaceSquare
+enum SurfaceSquare
 {
     obstacle,
     null
