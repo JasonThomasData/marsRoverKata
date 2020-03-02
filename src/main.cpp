@@ -42,17 +42,18 @@ int main(int argc, char *argv[])
         IO::displayInitialisationUsage();
     }
 
-    try
+    while (true)
     {
-        while (true)
+        try
         {
             const std::string instructions = IO::getUserInput();
             const std::string robotMoveReport = robot.receiveInstructions(instructions);
             IO::returnRobotReport(robotMoveReport);
         }
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr<< e.what()<< std::endl;
+        catch(const std::exception& e)
+        {
+            std::cout<< e.what()<< std::endl;
+            IO::displayRobotUsage();
+        }
     }
 }

@@ -16,6 +16,14 @@ void IO::displayInitialisationUsage()
     std::cout<< std::endl;
 }
 
+void IO::displayRobotUsage()
+{
+    const std::string example = "example flrffbr";
+    std::cout<< std::endl;
+    std::cout<< example<< std::endl;
+    std::cout<< std::endl;
+}
+
 void IO::checkNumberOfArgsIsValid(int& argc)
 {
     const int requiredArgs = 7;
