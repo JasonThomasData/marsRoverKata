@@ -15,8 +15,8 @@ class MessageInterpreter : public IMessageInterpreter
             const std::map<const Movement, std::string> movementsToReadableInstructions,
             const std::map<const Direction, std::string> directionToReadableDirection);
         std::vector<Movement> interpretInstructions(const std::string& instructions) override;
-        std::string getReadableInstruction(const Movement& movement) override;
-        std::string getReadableDirection(const Direction& direction) override;
+        std::string getReadableInstruction(const Movement movement) override;
+        std::string getReadableDirection(const Direction direction) override;
     private:
         std::string validInstructionsMessage;
         const std::map<const char, Movement> instructionsToMovements;

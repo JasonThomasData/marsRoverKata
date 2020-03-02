@@ -4,7 +4,7 @@
 #include "surface-square.hpp"
 #include "../configs/planet-config.hpp"
 
-Coordinates Planet::adjustCoordinatesForSurfaceBoundaries(const Coordinates& coordinates)
+Coordinates Planet::adjustCoordinatesForSurfaceBoundaries(const Coordinates coordinates)
 {
     Coordinates adjustedCoordinates;
     if(coordinates.fromTop < surfaceNorthBoundary)
@@ -30,7 +30,7 @@ Coordinates Planet::adjustCoordinatesForSurfaceBoundaries(const Coordinates& coo
     return adjustedCoordinates;
 }
 
-bool Planet::isObstacleAtCoordinate(const Coordinates& coordinates)
+bool Planet::isObstacleAtCoordinate(const Coordinates coordinates)
 {
     return surface[coordinates.fromTop][coordinates.fromLeft] == SurfaceSquare::obstacle;
 }

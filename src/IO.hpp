@@ -11,6 +11,8 @@ namespace IO
     void checkIsPositiveInteger(const std::string& arg);
     int getNumericArgument(const std::string& arg);
     std::string toLowercaseString(const std::string& arg);
-    StartupConfigs getStartupConfigs(int& argc, char* argv[]);
+    const StartupConfigs getStartupConfigs(int& argc, char* argv[]);
     Direction getDirection(const std::string& arg);
+    const std::string getUserInput();
+    void returnRobotReport(const std::string& robotMoveReport);
 }

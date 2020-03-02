@@ -12,10 +12,10 @@ class Planet: public IPlanet
     public:
         Planet();
         Planet(std::vector<std::vector<SurfaceSquare>> surface, const PlanetConfig& planetConfig);
-        bool isObstacleAtCoordinate(const Coordinates& coordinates) override;
-        Coordinates adjustCoordinatesForSurfaceBoundaries(const Coordinates& coordinates) override;
+        bool isObstacleAtCoordinate(const Coordinates coordinates) override;
+        Coordinates adjustCoordinatesForSurfaceBoundaries(const Coordinates coordinates) override;
     private:
-        int surfaceNorthBoundary;
+        int surfaceNorthBoundary; //these can be const if you use a list init()
         int surfaceEastBoundary;
         int surfaceSouthBoundary;
         int surfaceWestBoundary;

@@ -9,7 +9,7 @@
 #include "robot/spatial-awareness.hpp"
 #include "robot/message-interpreter.hpp"
 
-Robot createRobotWithDependencies(StartupConfigs configs)
+Robot createRobotWithDependencies(const StartupConfigs configs)
 {
     std::vector<std::vector<SurfaceSquare>> surface = SurfaceFactory::createSurfaceWithObstacles(configs);
     std::unique_ptr<IPlanet> mars = std::make_unique<Planet>(std::move(surface), configs.planet);
@@ -33,8 +33,7 @@ int main(int argc, char *argv[])
     Robot robot;
     try
     {
-        StartupConfigs configs;
-        configs = IO::getStartupConfigs(argc, argv);
+        const StartupConfigs configs = IO::getStartupConfigs(argc, argv);
         robot = createRobotWithDependencies(configs);
     }
     catch(const std::exception& e)
@@ -47,9 +46,9 @@ int main(int argc, char *argv[])
     {
         while (true)
         {
-            std::string instructions = "flfrbrfl"; //IO::getInstructions();
-            std::string robotMoveReport = robot.receiveInstructions(instructions);
-            //IO::returnOutput(roverMoveReport);
+            const std::string instructions = IO::getUserInput();
+            const std::string robotMoveReport = robot.receiveInstructions(instructions);
+            IO::returnRobotReport(robotMoveReport);
         }
     }
     catch(const std::exception& e)

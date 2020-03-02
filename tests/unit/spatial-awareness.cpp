@@ -16,13 +16,13 @@ SCENARIO( "SpatialAwareness can receive movement orders and perform movements" )
         int robotFromTop = 3;
         int robotFromLeft = 3;
         Coordinates coordinates = { robotFromTop, robotFromLeft };
-        std::map<Direction, Coordinates> coordinateChangeMoveForward = {
+        const std::map<const Direction, Coordinates> coordinateChangeMoveForward = {
             { Direction::north, { -1, 0 } },
             { Direction::east, { 0, 1 } },
             { Direction::south, { 1, 0 } },
             { Direction::west, { 0, -1 } }
         };
-        std::map<Direction, Coordinates> coordinateChangeMoveBackward = {
+        const std::map<const Direction, Coordinates> coordinateChangeMoveBackward = {
             { Direction::north, { 1, 0 } },
             { Direction::east, { 0, -1 } },
             { Direction::south, { -1, 0 } },

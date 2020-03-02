@@ -7,14 +7,14 @@
 #include "movements.hpp"
 #include "message-interpreter.hpp"
 
-std::string MessageInterpreter::getReadableInstruction(const Movement& movement)
+std::string MessageInterpreter::getReadableInstruction(const Movement movement)
 {
-    return movementsToReadableInstructions[movement];
+    return movementsToReadableInstructions.at(movement);
 }
 
-std::string MessageInterpreter::getReadableDirection(const Direction& direction)
+std::string MessageInterpreter::getReadableDirection(const Direction direction)
 {
-    return directionToReadableDirection[direction];
+    return directionToReadableDirection.at(direction);
 }
 
 std::vector<Movement> MessageInterpreter::interpretInstructions(const std::string& instructions)
@@ -44,7 +44,7 @@ Movement MessageInterpreter::getMovementInstruction(const char instruction)
     }
     else
     {
-        return instructionsToMovements[instruction];
+        return instructionsToMovements.at(instruction);
     }
 }
 

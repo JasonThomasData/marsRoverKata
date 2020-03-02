@@ -8,9 +8,9 @@
 #include "spatial-awareness.hpp"
 #include "movements.hpp"
 
-Coordinates SpatialAwareness::getNextCoordinates(const Movement& movement)
+Coordinates SpatialAwareness::getNextCoordinates(const Movement movement)
 {
-    Coordinates coordinatesDifference = getCoordinatesDifference(movement);
+    Coordinates coordinatesDifference = getCoordinatesDifference(directionFacing, movement);
     return getChangedCoordinates(coordinates, coordinatesDifference);
 }
 
@@ -26,15 +26,15 @@ Coordinates SpatialAwareness::getChangedCoordinates(Coordinates coordinates, con
     return coordinates;
 }
 
-Coordinates SpatialAwareness::getCoordinatesDifference(const Movement& movement)
+Coordinates SpatialAwareness::getCoordinatesDifference(const Direction directionFacing, const Movement movement)
 {
     if (movement == Movement::forward)
     {
-        return coordinateChangeMoveForward[directionFacing];
+        return coordinateChangeMoveForward.at(directionFacing);
     }
     else if (movement == Movement::backward)
     {
-        return coordinateChangeMoveBackward[directionFacing];
+        return coordinateChangeMoveBackward.at(directionFacing);
     }
     else
     {
@@ -73,8 +73,8 @@ void SpatialAwareness::turnRight() {
 SpatialAwareness::SpatialAwareness(
     Direction directionFacing,
     Coordinates coordinates,
-    const std::map<Direction, Coordinates> coordinateChangeMoveForward,
-    const std::map<Direction, Coordinates> coordinateChangeMoveBackward)
+    const std::map<const Direction, Coordinates> coordinateChangeMoveForward,
+    const std::map<const Direction, Coordinates> coordinateChangeMoveBackward)
     :directionFacing(std::move(directionFacing)),
     coordinates(std::move(coordinates)),
     coordinateChangeMoveForward(std::move(coordinateChangeMoveForward)),

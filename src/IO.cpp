@@ -80,7 +80,20 @@ Direction IO::getDirection(const std::string& arg)
     }
 }
 
-StartupConfigs IO::getStartupConfigs(int& argc, char* argv[])
+const std::string IO::getUserInput()
+{
+    std::cout<< "Waiting for instructions:"<< std::endl;
+    std::string userInput;
+    std::cin >> userInput;
+    return userInput;
+}
+
+void IO::returnRobotReport(const std::string& robotMoveReport)
+{
+    std::cout<< robotMoveReport<< std::endl;
+}
+
+const StartupConfigs IO::getStartupConfigs(int& argc, char* argv[])
 {
     checkNumberOfArgsIsValid(argc);
 
