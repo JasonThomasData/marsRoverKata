@@ -11,43 +11,13 @@
 #include "movements.hpp"
 #include "robot.hpp"
 
-std::string Robot::getMovementInstructionResult(const Movement& movement)
-{
-    std::ostringstream result;
-    result<< "Received instruction to move { "<< messageInterpreter->getReadableInstruction(movement)<< " }"<< std::endl;
-    return result.str();
-}
-
-std::string Robot::getCollisionResult(const Coordinates& occupiedCoordinates)
-{
-    std::ostringstream result;
-    result<< "Hit obstacle at { fromTop: "<< occupiedCoordinates.fromTop<< ", fromLeft: "<< occupiedCoordinates.fromLeft<< " }"<< std::endl;
-    result<< "Did not complete move"<< std::endl;
-    return result.str();
-}
-
-std::string Robot::getNewCoordinatesResult(const Coordinates& newCoordinates)
-{
-    std::ostringstream result;
-    result<< "Moved to { fromTop: "<< newCoordinates.fromTop<< ", fromLeft: "<< newCoordinates.fromLeft<< " }"<< std::endl;
-    return result.str();
-}
-
-std::string Robot::getTurnResult(const Movement& movement)
-{
-    std::ostringstream result;
-    Direction directionFacing = spatialAwareness->getDirectionFacing();
-    result<< "Turned { "<< messageInterpreter->getReadableInstruction(movement) << " } and is now facing { "<<  messageInterpreter->getReadableDirection(directionFacing)<< " }"<< std::endl;
-    return result.str();
-}
-
 std::string Robot::receiveInstructions(const std::string& instructions)
 {
     std::vector<Movement> movementsToPerform = messageInterpreter->interpretInstructions(instructions);
     std::string results;
     for(Movement movement : movementsToPerform)
     {
-        results.append(getMovementInstructionResult(movement));
+        results.append(reportMaker->makeMovementInstructionReport(movement));
         if(movement == Movement::forward || movement == Movement::backward)
         {
             Coordinates potentialNextCoordinates = spatialAwareness->getNextCoordinates(movement);
@@ -55,24 +25,29 @@ std::string Robot::receiveInstructions(const std::string& instructions)
             bool coordinatesOccupied = planet->isObstacleAtCoordinate(adjustedNextCoordinates);
             if(coordinatesOccupied)
             {
-                results.append(getCollisionResult(adjustedNextCoordinates));
-                return results;
+                std::string report = reportMaker->makeCollisionReport(adjustedNextCoordinates);
+                results.append(report);
             }
             else
             {
                 spatialAwareness->updateCoordinates(adjustedNextCoordinates);
-                results.append(getNewCoordinatesResult(adjustedNextCoordinates));
+                std::string report = reportMaker->makeNewCoordinatesReport(adjustedNextCoordinates);
+                results.append(report);
             }
         }
         else if (movement == Movement::left)
         {
             spatialAwareness->turnLeft();
-            results.append(getTurnResult(movement));
+            Direction directionFacing = spatialAwareness->getDirectionFacing();
+            std::string report = reportMaker->makeTurnReport(directionFacing, movement);
+            results.append(report);
         }
         else if (movement == Movement::right)
         {
+            Direction directionFacing = spatialAwareness->getDirectionFacing();
             spatialAwareness->turnRight();
-            results.append(getTurnResult(movement));
+            std::string report = reportMaker->makeTurnReport(directionFacing, movement);
+            results.append(report);
         }
     }
     return results;
@@ -80,10 +55,10 @@ std::string Robot::receiveInstructions(const std::string& instructions)
 
 Robot::Robot(std::unique_ptr<IPlanet> planet,
     std::unique_ptr<ISpatialAwareness> spatialAwareness,
-    std::unique_ptr<IMessageInterpreter> messageInterpreter)
+    std::unique_ptr<IMessageInterpreter> messageInterpreter,
+    std::unique_ptr<IReportMaker> reportMaker)
     :messageInterpreter(std::move(messageInterpreter)),
     planet(std::move(planet)),
-    spatialAwareness(std::move(spatialAwareness))
+    spatialAwareness(std::move(spatialAwareness)),
+    reportMaker(std::move(reportMaker))
 {}
-
-Robot::Robot(){};

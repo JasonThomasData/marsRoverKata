@@ -15,10 +15,7 @@ SCENARIO( "MessageInterpreter can receives instructions" )
     GIVEN( "Instructions and movements mapped" )
     {
         RobotConfig robotConfig = RobotConfig();
-        MessageInterpreter messageInterpreter = MessageInterpreter(
-            std::move(robotConfig.instructionsToMovements),
-            std::move(robotConfig.movementsToReadableInstrunctions),
-            std::move(robotConfig.directionToReadableDirection));
+        MessageInterpreter messageInterpreter = MessageInterpreter(std::move(robotConfig.instructionsToMovements));
 
         THEN( "can receive valid instructions" )
         {
@@ -42,22 +39,6 @@ SCENARIO( "MessageInterpreter can receives instructions" )
                 REQUIRE(translatedMovements.at(2) == Movement::backward);
                 REQUIRE(translatedMovements.at(3) == Movement::right);
             }
-        }
-
-        THEN( "can retrieve readable message for a movement" )
-        {
-            REQUIRE( messageInterpreter.getReadableInstruction(Movement::forward) == "f (forward)" );
-            REQUIRE( messageInterpreter.getReadableInstruction(Movement::backward) == "b (backward)" );
-            REQUIRE( messageInterpreter.getReadableInstruction(Movement::left) == "l (left)" );
-            REQUIRE( messageInterpreter.getReadableInstruction(Movement::right) == "r (right)" );
-        }
-
-        THEN( "can retrieve readable message for a direction" )
-        {
-            REQUIRE( messageInterpreter.getReadableDirection(Direction::north) == "north" );
-            REQUIRE( messageInterpreter.getReadableDirection(Direction::east) == "east" );
-            REQUIRE( messageInterpreter.getReadableDirection(Direction::south) == "south" );
-            REQUIRE( messageInterpreter.getReadableDirection(Direction::west) == "west" );
         }
     }
 }
