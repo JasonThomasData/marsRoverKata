@@ -11,30 +11,19 @@
 
 SCENARIO( "SpatialAwareness can receive movement orders and perform movements" )
 {
-    GIVEN( "SpatialAwareness configs set")
+    GIVEN( "Coordinates set")
     {
         int robotFromTop = 3;
         int robotFromLeft = 3;
-        Coordinates coordinates = { robotFromTop, robotFromLeft };
-        const std::map<const Direction, Coordinates> coordinateChangeMoveForward = {
-            { Direction::north, { -1, 0 } },
-            { Direction::east, { 0, 1 } },
-            { Direction::south, { 1, 0 } },
-            { Direction::west, { 0, -1 } }
-        };
-        const std::map<const Direction, Coordinates> coordinateChangeMoveBackward = {
-            { Direction::north, { 1, 0 } },
-            { Direction::east, { 0, -1 } },
-            { Direction::south, { -1, 0 } },
-            { Direction::west, { 0, 1 } }
-        };
+        RobotConfig robotConfig = RobotConfig();
+        robotConfig.coordinates = { robotFromTop, robotFromLeft };
         GIVEN( "Facing north ")
         {
             SpatialAwareness spatialAwareness = SpatialAwareness(
                 std::move(Direction::north),
-                std::move(coordinates),
-                std::move(coordinateChangeMoveForward),
-                std::move(coordinateChangeMoveBackward));
+                std::move(robotConfig.coordinates),
+                std::move(robotConfig.coordinateChangeMoveForward),
+                std::move(robotConfig.coordinateChangeMoveBackward));
             WHEN( " SpatialAwareness turns left " )
             {
                 spatialAwareness.turnLeft();
@@ -76,9 +65,9 @@ SCENARIO( "SpatialAwareness can receive movement orders and perform movements" )
         {
             SpatialAwareness spatialAwareness = SpatialAwareness(
                 std::move(Direction::south),
-                std::move(coordinates),
-                std::move(coordinateChangeMoveForward),
-                std::move(coordinateChangeMoveBackward));
+                std::move(robotConfig.coordinates),
+                std::move(robotConfig.coordinateChangeMoveForward),
+                std::move(robotConfig.coordinateChangeMoveBackward));
             WHEN( " SpatialAwareness turns left " )
             {
                 spatialAwareness.turnLeft();
@@ -120,9 +109,9 @@ SCENARIO( "SpatialAwareness can receive movement orders and perform movements" )
         {
             SpatialAwareness spatialAwareness = SpatialAwareness(
                 std::move(Direction::east),
-                std::move(coordinates),
-                std::move(coordinateChangeMoveForward),
-                std::move(coordinateChangeMoveBackward));
+                std::move(robotConfig.coordinates),
+                std::move(robotConfig.coordinateChangeMoveForward),
+                std::move(robotConfig.coordinateChangeMoveBackward));
             WHEN( " SpatialAwareness turns left " )
             {
                 spatialAwareness.turnLeft();
@@ -164,9 +153,9 @@ SCENARIO( "SpatialAwareness can receive movement orders and perform movements" )
         {
             SpatialAwareness spatialAwareness = SpatialAwareness(
                 std::move(Direction::west),
-                std::move(coordinates),
-                std::move(coordinateChangeMoveForward),
-                std::move(coordinateChangeMoveBackward));
+                std::move(robotConfig.coordinates),
+                std::move(robotConfig.coordinateChangeMoveForward),
+                std::move(robotConfig.coordinateChangeMoveBackward));
             WHEN( " SpatialAwareness turns left " )
             {
                 spatialAwareness.turnLeft();

@@ -12,17 +12,11 @@ SCENARIO ("Planet ***")
         int surfaceWidth = 2;
         int surfaceHeight = 2;
         int obstacleNumber = 3;
-        int robotFromTop = 1;
-        int robotFromLeft = 1;
-        Direction robotDirection = Direction::west;
 
-        StartupConfigs startupConfigs = {
-            { surfaceWidth, surfaceHeight, obstacleNumber },
-            { { robotFromTop, robotFromLeft } , robotDirection }
-        };
+        PlanetConfig planetConfig = { surfaceWidth, surfaceHeight, obstacleNumber };
 
         std::vector<std::vector<SurfaceSquare>> surface; //Tests not need this
-        Planet planet = Planet(std::move(surface), startupConfigs.planet);
+        Planet planet = Planet(std::move(surface), planetConfig);
 
         WHEN("Coordinates north of north boundary")
         {

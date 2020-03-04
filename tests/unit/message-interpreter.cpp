@@ -10,95 +10,15 @@
 #include "../../src/planet/planet.hpp"
 #include "../../src/coordinates.hpp"
 
-SCENARIO( "MessageInterpreter can reject blank maps" )
-{
-    GIVEN( "Maps are initialised" )
-    {
-        const std::map<const char, Movement> instructionsToMovements = {
-            { 'f', Movement::forward },
-            { 'b', Movement::backward },
-            { 'l', Movement::left },
-            { 'r', Movement::right }
-        };
-        const std::map<const Movement, std::string> movementsToReadableInstrunctions = {
-            { Movement::forward, "f (forward)" },
-            { Movement::backward, "b (backward)" },
-            { Movement::left, "l (left)" },
-            { Movement::right, "r (right)" }
-        };
-        const std::map<const Direction, std::string> directionToReadableDirection = {
-            { Direction::north, "north" },
-            { Direction::east, "east" },
-            { Direction::south, "south" },
-            { Direction::west, "west" }
-        };
-    
-        WHEN( "InstructionsToMovements without data" )
-        {
-            std::map<const char, Movement> blankInstructionsToMovements;
-            THEN( "MessageInterpreter won't construct" )
-            {
-                REQUIRE_THROWS_AS(
-                    MessageInterpreter(std::move(blankInstructionsToMovements),
-                        std::move(movementsToReadableInstrunctions),
-                        std::move(directionToReadableDirection)),
-                    std::invalid_argument);
-            }
-        }
-
-        WHEN( "MovementsToReadableInstructions without data" )
-        {
-            const std::map<const Movement, std::string> blankMovementsToReadableInstrunctions;
-            THEN( "MessageInterpreter won't construct" )
-            {
-                REQUIRE_THROWS_AS(
-                    MessageInterpreter(std::move(instructionsToMovements),
-                        std::move(blankMovementsToReadableInstrunctions),
-                        std::move(directionToReadableDirection)),
-                    std::invalid_argument);
-            }
-        }
-
-        WHEN( "DirectionToReadableDirection without data" )
-        {
-            const std::map<const Direction, std::string> blankDirectionToReadableDirection;
-            THEN( "MessageInterpreter won't construct" )
-            {
-                REQUIRE_THROWS_AS(
-                    MessageInterpreter(std::move(instructionsToMovements),
-                        std::move(movementsToReadableInstrunctions),
-                        std::move(blankDirectionToReadableDirection)),
-                    std::invalid_argument);
-            }
-        }
-    }
-}
-
 SCENARIO( "MessageInterpreter can receives instructions" )
 {
     GIVEN( "Instructions and movements mapped" )
     {
-        const std::map<const char, Movement> instructionsToMovements = {
-            { 'f', Movement::forward },
-            { 'b', Movement::backward },
-            { 'l', Movement::left },
-            { 'r', Movement::right }
-        };
-        const std::map<const Movement, std::string> movementsToReadableInstrunctions = {
-            { Movement::forward, "f (forward)" },
-            { Movement::backward, "b (backward)" },
-            { Movement::left, "l (left)" },
-            { Movement::right, "r (right)" }
-        };
-        const std::map<const Direction, std::string> directionToReadableDirection = {
-            { Direction::north, "north" },
-            { Direction::east, "east" },
-            { Direction::south, "south" },
-            { Direction::west, "west" }
-        };
-        MessageInterpreter messageInterpreter = MessageInterpreter(std::move(instructionsToMovements),
-            std::move(movementsToReadableInstrunctions),
-            std::move(directionToReadableDirection));
+        RobotConfig robotConfig = RobotConfig();
+        MessageInterpreter messageInterpreter = MessageInterpreter(
+            std::move(robotConfig.instructionsToMovements),
+            std::move(robotConfig.movementsToReadableInstrunctions),
+            std::move(robotConfig.directionToReadableDirection));
 
         THEN( "can receive valid instructions" )
         {

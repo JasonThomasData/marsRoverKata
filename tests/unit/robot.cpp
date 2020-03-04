@@ -40,28 +40,10 @@ SCENARIO( "Robot receives instructions and can move about" )
             coordinates,
             startupConfigs.robot.coordinateChangeMoveForward,
             startupConfigs.robot.coordinateChangeMoveBackward);
-        const std::map<const char, Movement> instructionsToMovements = {
-            { 'f', Movement::forward },
-            { 'b', Movement::backward },
-            { 'l', Movement::left },
-            { 'r', Movement::right }
-        };
-        const std::map<const Movement, std::string> movementsToReadableInstrunctions = {
-            { Movement::forward, "f (forward)" },
-            { Movement::backward, "b (backward)" },
-            { Movement::left, "l (left)" },
-            { Movement::right, "r (right)" }
-        };
-        const std::map<const Direction, std::string> directionToReadableDirection = {
-            { Direction::north, "north" },
-            { Direction::east, "east" },
-            { Direction::south, "south" },
-            { Direction::west, "west" }
-        };
         std::unique_ptr<IMessageInterpreter> messageInterpreter = std::make_unique<MessageInterpreter>(
-            std::move(instructionsToMovements),
-            std::move(movementsToReadableInstrunctions),
-            std::move(directionToReadableDirection));
+            std::move(startupConfigs.robot.instructionsToMovements),
+            std::move(startupConfigs.robot.movementsToReadableInstrunctions),
+            std::move(startupConfigs.robot.directionToReadableDirection));
         Robot robot = Robot(std::move(planet), std::move(spatialAwareness), std::move(messageInterpreter));
 
         WHEN( "Robot receives instructions" )
