@@ -1,8 +1,8 @@
 
-src = build/io.o build/configs.o build/message-interpreter.o build/spatial-awareness.o build/surface-factory.o build/planet.o build/robot.o
-testCases = build/io-unit-tests.o build/config-unit-tests.o build/interpreter-unit-tests.o build/spatial-unit-tests.o build/surface-factory-unit-tests.o build/planet-unit-tests.o build/robot-unit-tests.o
+src = build/io.o build/configs.o build/message-interpreter.o build/spatial-awareness.o build/report-maker.o build/surface-factory.o build/planet.o build/robot.o
+testCases = build/io-unit-tests.o build/config-unit-tests.o build/interpreter-unit-tests.o build/spatial-unit-tests.o build/report-maker-unit-tests.o build/surface-factory-unit-tests.o build/planet-unit-tests.o build/robot-unit-tests.o
 tests = $(testCases) unit-tests-main unit-test-runner
-all: $(src) $(tests) main simulation
+all: $(src) $(tests) main simulation run-unit-tests
 
 comp = clang++
 C++FLAGS= -std=c++17 -Wall -Wc++11-extensions
@@ -19,6 +19,9 @@ build/message-interpreter.o: src/robot/message-interpreter.cpp
 
 build/spatial-awareness.o: src/robot/spatial-awareness.cpp
 	$(comp) $(C++FLAGS) -c src/robot/spatial-awareness.cpp -o build/spatial-awareness.o
+
+build/report-maker.o: src/robot/report-maker.cpp
+	$(comp) $(C++FLAGS) -c src/robot/report-maker.cpp -o build/report-maker.o
 
 build/surface-factory.o: src/planet/surface-factory.cpp
 	$(comp) $(C++FLAGS) -c src/planet/surface-factory.cpp -o build/surface-factory.o
@@ -41,6 +44,9 @@ build/interpreter-unit-tests.o: tests/unit/message-interpreter.cpp
 build/spatial-unit-tests.o: tests/unit/spatial-awareness.cpp
 	$(comp) $(C++FLAGS) -Wno-writable-strings -c tests/unit/spatial-awareness.cpp -o build/spatial-unit-tests.o
 
+build/report-maker-unit-tests.o: tests/unit/spatial-awareness.cpp
+	$(comp) $(C++FLAGS) -Wno-writable-strings -c tests/unit/report-maker.cpp -o build/report-maker-unit-tests.o
+
 build/surface-factory-unit-tests.o: tests/unit/surface-factory.cpp
 	$(comp) $(C++FLAGS) -Wno-writable-strings -c tests/unit/surface-factory.cpp -o build/surface-factory-unit-tests.o
 
@@ -62,5 +68,12 @@ main: src/main.cpp
 simulation: $(src) 
 	$(comp) $(C++FLAGS) $(src) build/main.o -o bin/simulation
 
+run-unit-tests:
+	$(info ---)
+	$(info UNIT TESTS)
+	./bin/unit-tests
+
 clean:
 	rm build/*
+
+# Make a test to validate executable

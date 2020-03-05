@@ -8,6 +8,7 @@
 #include "../../src/robot/robot.hpp"
 #include "../../src/robot/spatial-awareness.hpp"
 #include "../../src/robot/message-interpreter.hpp"
+#include "../../src/robot/report-maker.hpp"
 #include "../../src/planet/i_planet.hpp"
 #include "../../src/planet/planet.hpp"
 #include "../../src/coordinates.hpp"
@@ -41,10 +42,16 @@ SCENARIO( "Robot receives instructions and can move about" )
             startupConfigs.robot.coordinateChangeMoveForward,
             startupConfigs.robot.coordinateChangeMoveBackward);
         std::unique_ptr<IMessageInterpreter> messageInterpreter = std::make_unique<MessageInterpreter>(
-            std::move(startupConfigs.robot.instructionsToMovements),
+            std::move(startupConfigs.robot.instructionsToMovements));
+        std::unique_ptr<IReportMaker> reportMaker = std::make_unique<ReportMaker>(
             std::move(startupConfigs.robot.movementsToReadableInstrunctions),
             std::move(startupConfigs.robot.directionToReadableDirection));
-        Robot robot = Robot(std::move(planet), std::move(spatialAwareness), std::move(messageInterpreter));
+
+        Robot robot = Robot(
+            std::move(planet),
+            std::move(spatialAwareness),
+            std::move(messageInterpreter),
+            std::move(reportMaker));
 
         WHEN( "Robot receives instructions" )
         {

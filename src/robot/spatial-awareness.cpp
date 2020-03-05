@@ -75,8 +75,8 @@ SpatialAwareness::SpatialAwareness(
     Coordinates coordinates,
     const std::map<const Direction, Coordinates> coordinateChangeMoveForward,
     const std::map<const Direction, Coordinates> coordinateChangeMoveBackward)
-    :directionFacing(std::move(directionFacing)),
-    coordinates(std::move(coordinates)),
-    coordinateChangeMoveForward(std::move(coordinateChangeMoveForward)),
-    coordinateChangeMoveBackward(std::move(coordinateChangeMoveBackward))
+    :coordinateChangeMoveForward(std::move(coordinateChangeMoveForward)),
+    coordinateChangeMoveBackward(std::move(coordinateChangeMoveBackward)),
+    directionFacing(std::move(directionFacing)),
+    coordinates(std::move(coordinates))
 {};

@@ -18,11 +18,17 @@ std::vector<std::vector<SurfaceSquare>> SurfaceFactory::createSurface(const Plan
     }
     return surface;
 };
-
-std::vector<std::vector<SurfaceSquare>> SurfaceFactory::createObstacles(const StartupConfigs& startupConfig,
-    std::vector<std::vector<SurfaceSquare>> surface)
+/*
+std::vector<Coordinates> SurfaceFactory::getObstacleCoordinates(const PlanetConfig& planetConfig)
+{
+    return { { 0, 0 } };
+}
+*/
+std::vector<std::vector<SurfaceSquare>> SurfaceFactory::addObstaclesToSurface(const StartupConfigs& startupConfig,
+    std::vector<std::vector<SurfaceSquare>>& surfaceWithoutObstacles)
 {
     int numberOfObstacles = 0;
+    std::vector<std::vector<SurfaceSquare>> surface = surfaceWithoutObstacles;
     while(numberOfObstacles < startupConfig.planet.obstacleNumber)
     {
         Coordinates obstacleCoordinates;
@@ -42,5 +48,6 @@ std::vector<std::vector<SurfaceSquare>> SurfaceFactory::createObstacles(const St
 std::vector<std::vector<SurfaceSquare>> SurfaceFactory::createSurfaceWithObstacles(const StartupConfigs& startupConfig)
 {
     std::vector<std::vector<SurfaceSquare>> surface = SurfaceFactory::createSurface(startupConfig.planet);
-    return SurfaceFactory::createObstacles(startupConfig, surface);
+    //std::vector<Coordinates> obstacleCoordinates = SurfaceFactory::getObstacleCoordinates(startupConfig.planet);
+    return SurfaceFactory::addObstaclesToSurface(startupConfig, surface);
 }

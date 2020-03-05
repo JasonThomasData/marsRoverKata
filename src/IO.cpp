@@ -18,8 +18,10 @@ void IO::displayInitialisationUsage()
 
 void IO::displayRobotUsage()
 {
-    const std::string example = "example flrffbr";
+    const std::string usage = "Valid instructions are: f (forward), b (backward), l (left), r (right)";
+    const std::string example = "eg: flrffbr";
     std::cout<< std::endl;
+    std::cout<< usage<< std::endl;
     std::cout<< example<< std::endl;
     std::cout<< std::endl;
 }
@@ -90,6 +92,7 @@ Direction IO::getDirection(const std::string& arg)
 
 const std::string IO::getUserInput()
 {
+    //checking if an instruction is valid, yes or no, should occur here.
     std::cout<< "Waiting for instructions:"<< std::endl;
     std::string userInput;
     std::cin >> userInput;

@@ -11,7 +11,6 @@
 class SpatialAwareness : public ISpatialAwareness
 {
     public:
-        SpatialAwareness();
         SpatialAwareness(
             Direction directionFacing,
             Coordinates coordinates,

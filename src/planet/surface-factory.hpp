@@ -9,8 +9,9 @@
 namespace SurfaceFactory
 {
     std::vector<std::vector<SurfaceSquare>> createSurface(const PlanetConfig& planetConfig);
-    std::vector<std::vector<SurfaceSquare>> createObstacles(const StartupConfigs& startupConfig,
-        std::vector<std::vector<SurfaceSquare>> surfaceWithoutObstacles);
+    std::vector<Coordinates> getObstacleCoordinates(const PlanetConfig& planetConfig);
+    std::vector<std::vector<SurfaceSquare>> addObstaclesToSurface(const StartupConfigs& startupConfig,
+        std::vector<std::vector<SurfaceSquare>>& surfaceWithoutObstacles);
     std::vector<std::vector<SurfaceSquare>> createSurfaceWithObstacles(const StartupConfigs& startupConfig);
 };
 

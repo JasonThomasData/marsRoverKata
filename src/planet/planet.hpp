@@ -10,7 +10,6 @@
 class Planet: public IPlanet
 {
     public:
-        Planet();
         Planet(std::vector<std::vector<SurfaceSquare>> surface, const PlanetConfig& planetConfig);
         bool isObstacleAtCoordinate(const Coordinates coordinates) override;
         Coordinates adjustCoordinatesForSurfaceBoundaries(const Coordinates coordinates) override;

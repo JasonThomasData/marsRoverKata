@@ -43,5 +43,3 @@ Planet::Planet(const std::vector<std::vector<SurfaceSquare>> surface, const Plan
     surfaceSouthBoundary = planetConfig.surfaceHeight - 1; 
     surfaceWestBoundary = 0;
 }
-
-Planet::Planet(){};
